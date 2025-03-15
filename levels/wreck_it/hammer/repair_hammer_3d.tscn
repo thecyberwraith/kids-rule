@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dng8furi3xg7y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jnf3x"]
+albedo_color = Color(1, 1, 0.0941176, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hf7hq"]
+material = SubResource("StandardMaterial3D_jnf3x")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="Curve" id="Curve_7vp4v"]
+_data = [Vector2(0.00653595, 1), 0.0, 0.0, 0, 0, Vector2(0.98366, 0.106675), -2.87357, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c5377"]
+radius = 1.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="HammerParticles" type="CPUParticles3D" parent="."]
+emitting = false
+lifetime = 0.28
+one_shot = true
+lifetime_randomness = 0.09
+mesh = SubResource("BoxMesh_hf7hq")
+direction = Vector3(0, -1, 0)
+spread = 180.0
+gravity = Vector3(0, -4, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.1
+angular_velocity_min = -53.01
+angular_velocity_max = 61.84
+scale_amount_curve = SubResource("Curve_7vp4v")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_c5377")

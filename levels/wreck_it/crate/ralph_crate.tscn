@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://b8w40mj4v642v"]
+
+[ext_resource type="Script" uid="uid://n1o2jgq0jngq" path="res://levels/wreck_it/crate/ralph_crate.gd" id="1_n3a4k"]
+[ext_resource type="Texture2D" uid="uid://lu5gt6wwc7br" path="res://levels/wreck_it/crate/box.png" id="1_qge1a"]
+[ext_resource type="PackedScene" uid="uid://byp8f4hgmn1om" path="res://levels/wreck_it/crate/broken_ralph_crate.tscn" id="2_yt8wi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02sfa"]
+atlas = ExtResource("1_qge1a")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tciwh"]
+atlas = ExtResource("1_qge1a")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sccgd"]
+atlas = ExtResource("1_qge1a")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kvib"]
+atlas = ExtResource("1_qge1a")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cj4vf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02sfa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tciwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sccgd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kvib")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hpvd3"]
+size = Vector3(1.60425, 1.5957, 0.165833)
+
+[node name="Crate" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("1_n3a4k")
+broken_crate = ExtResource("2_yt8wi")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.801384, 0)
+pixel_size = 0.05
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_cj4vf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00866699, 0.801384, 0.000946045)
+shape = SubResource("BoxShape3D_hpvd3")

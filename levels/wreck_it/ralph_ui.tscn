@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3dpq7cll3yq6"]
+
+[ext_resource type="Script" uid="uid://w8m4olb72taf" path="res://levels/wreck_it/ralph_ui.gd" id="1_e51o3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_57f8d"]
+bg_color = Color(0.898039, 0.45098, 0.384314, 0.156863)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qgjqo"]
+bg_color = Color(0.65098, 0, 0.0745098, 0.517647)
+
+[node name="RalphUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e51o3")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_57f8d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qgjqo")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.95
+anchor_right = 0.05
+anchor_bottom = 0.95
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+text = "0"

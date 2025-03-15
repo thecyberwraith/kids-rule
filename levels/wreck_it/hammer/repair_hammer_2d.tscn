@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf2krxda7qpt4"]
+
+[ext_resource type="Texture2D" uid="uid://c07p7tbmfus2l" path="res://levels/wreck_it/hammer/the_hammer.png" id="1_xk043"]
+[ext_resource type="AudioStream" uid="uid://c41ec6g8u3p51" path="res://levels/wreck_it/players/audio/Blip_Select.wav" id="2_3nbl8"]
+
+[node name="The Hammer" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 9)
+rotation = 1.5708
+scale = Vector2(3, 3)
+texture = ExtResource("1_xk043")
+
+[node name="Mount" type="Marker2D" parent="."]
+position = Vector2(103, 58)
+rotation = 1.5708
+scale = Vector2(3, 3)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_3nbl8")

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dw4j174xxubhl"]
+
+[ext_resource type="Script" uid="uid://055nka2yfnqm" path="res://ui/overlay.gd" id="1_fvwlh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jb4ij"]
+font_size = 40
+
+[node name="Overlay" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fvwlh")
+
+[node name="Text" type="Label" parent="."]
+layout_mode = 2
+text = "Ready"
+label_settings = SubResource("LabelSettings_jb4ij")
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+ignore_time_scale = true

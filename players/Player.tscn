@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://dfbvnsnqbyb31"]
+
+[ext_resource type="Script" uid="uid://cilqegg4aa6rh" path="res://players/player.gd" id="1_3nwc1"]
+[ext_resource type="PackedScene" uid="uid://yq07gl3yv1o3" path="res://players/ellie.tscn" id="1_74jmb"]
+[ext_resource type="Shader" uid="uid://di2t8cu5g6oto" path="res://players/flash_shader.gdshader" id="2_0an8e"]
+[ext_resource type="Script" uid="uid://cyw8gex88n7v7" path="res://states/StateMachine.gd" id="3_k6pgp"]
+[ext_resource type="Script" uid="uid://dlvbphqlqk6x3" path="res://states/IdleState.gd" id="4_u87uc"]
+[ext_resource type="Script" uid="uid://bj0qqyveye3xt" path="res://states/WalkState.gd" id="5_k41wk"]
+[ext_resource type="Script" uid="uid://bhhkefilgcye1" path="res://states/FallState.gd" id="6_x5lu0"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5r27k"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wsstp"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_0an8e")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(0.917647, 0.0627451, 0, 1)
+shader_parameter/albedo_tex = SubResource("ViewportTexture_5r27k")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2k8d"]
+radius = 0.391008
+height = 2.91192
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_3nwc1")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70051, -0.371238, 0)
+material_override = SubResource("ShaderMaterial_wsstp")
+centered = false
+pixel_size = 0.005
+texture = SubResource("ViewportTexture_5r27k")
+region_rect = Rect2(0, 0, 700, 764)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(700, 700)
+
+[node name="Offset" type="Node2D" parent="SubViewport"]
+position = Vector2(350, 600)
+
+[node name="Ellie" parent="SubViewport/Offset" instance=ExtResource("1_74jmb")]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("visuals", "character", "state")]
+script = ExtResource("3_k6pgp")
+visuals = NodePath("../SubViewport/Offset/Ellie")
+character = NodePath("..")
+state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("walk", "fall")]
+script = ExtResource("4_u87uc")
+walk = NodePath("../WalkState")
+fall = NodePath("../FallState")
+
+[node name="WalkState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "fall_state")]
+script = ExtResource("5_k41wk")
+idle_state = NodePath("../Idle")
+fall_state = NodePath("../FallState")
+max_speed = 6.411
+
+[node name="FallState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("6_x5lu0")
+idle_state = NodePath("../Idle")
+air_speed = 4.295
+fall_speed = 4.644
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43346, 0)
+shape = SubResource("CapsuleShape3D_l2k8d")

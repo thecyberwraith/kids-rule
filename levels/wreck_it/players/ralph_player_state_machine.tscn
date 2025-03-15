@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://d3x4omu7pbiet"]
+
+[ext_resource type="Script" uid="uid://ch3a22j6nhlnn" path="res://levels/wreck_it/players/state_idle.gd" id="1_1ycul"]
+[ext_resource type="Script" uid="uid://dcif8xwl174qf" path="res://levels/wreck_it/players/state_walk.gd" id="2_67qxo"]
+[ext_resource type="Script" uid="uid://dv77vcwtxdw6q" path="res://levels/wreck_it/players/state_swing.gd" id="3_mvg8d"]
+[ext_resource type="AudioStream" uid="uid://bk5uvhpkydox7" path="res://levels/wreck_it/players/audio/tinywarble.wav" id="3_s5b5n"]
+[ext_resource type="Script" uid="uid://cqfnvu740rvvc" path="res://levels/wreck_it/players/state_stun.gd" id="4_dcir0"]
+[ext_resource type="AudioStream" uid="uid://bdsbhe3s4exeq" path="res://levels/wreck_it/players/audio/spring1.wav" id="5_ykgcd"]
+[ext_resource type="AudioStream" uid="uid://fjysvf35bt4e" path="res://levels/wreck_it/players/audio/spring3.wav" id="6_w8hx2"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2cwkn"]
+streams_count = 2
+stream_0/stream = ExtResource("5_ykgcd")
+stream_1/stream = ExtResource("6_w8hx2")
+
+[node name="RalphPlayerStateMachine" type="Node"]
+
+[node name="idle" type="Node" parent="." node_paths=PackedStringArray("walk", "swing")]
+script = ExtResource("1_1ycul")
+walk = NodePath("../walk")
+swing = NodePath("../swing")
+animation = "idle"
+
+[node name="walk" type="Node" parent="." node_paths=PackedStringArray("idle_state", "swing")]
+script = ExtResource("2_67qxo")
+idle_state = NodePath("../idle")
+swing = NodePath("../swing")
+animation = "walk"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="walk"]
+stream = ExtResource("3_s5b5n")
+
+[node name="swing" type="Node" parent="." node_paths=PackedStringArray("idle")]
+script = ExtResource("3_mvg8d")
+idle = NodePath("../idle")
+animation = "swing"
+
+[node name="stun" type="Node" parent="." node_paths=PackedStringArray("idle")]
+script = ExtResource("4_dcir0")
+idle = NodePath("../idle")
+animation = "sit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="stun"]
+stream = SubResource("AudioStreamRandomizer_2cwkn")

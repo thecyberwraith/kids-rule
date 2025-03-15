@@ -1,0 +1,258 @@
+[gd_scene load_steps=34 format=3 uid="uid://dkx2m2w8ydj7q"]
+
+[ext_resource type="Script" uid="uid://b18dj4flq4db1" path="res://levels/wreck_it/ralph/ralph.gd" id="1_0kaj3"]
+[ext_resource type="Texture2D" uid="uid://cw6ot2fiv1rh6" path="res://levels/wreck_it/ralph/ralph.png" id="1_8a4ln"]
+[ext_resource type="Script" uid="uid://dpyprf6jr8vc" path="res://levels/wreck_it/ralph/ralph_state_machine.gd" id="2_bakx0"]
+[ext_resource type="Script" uid="uid://i3pww84u27xe" path="res://levels/wreck_it/ralph/state_idle.gd" id="3_rj4mr"]
+[ext_resource type="Script" uid="uid://dllx5klddqklg" path="res://levels/wreck_it/ralph/state_move_to_target.gd" id="5_j7kh6"]
+[ext_resource type="Script" uid="uid://b1pgvr5ccdpm0" path="res://states/AnimatedState.gd" id="5_wstu6"]
+[ext_resource type="Script" uid="uid://bj6at5mjydnri" path="res://levels/wreck_it/ralph/state_wreck.gd" id="6_8v54q"]
+[ext_resource type="AudioStream" uid="uid://bqqcboilaaq81" path="res://levels/wreck_it/ralph/audio/walk.wav" id="6_m1axq"]
+[ext_resource type="Script" uid="uid://8a2eqr07tw7a" path="res://levels/wreck_it/ralph/state_win.gd" id="7_8doe5"]
+[ext_resource type="AudioStream" uid="uid://jmmpo8a1ii5h" path="res://levels/wreck_it/ralph/audio/wrecking.wav" id="8_wryu2"]
+[ext_resource type="Texture2D" uid="uid://dewelr70kfumc" path="res://levels/wreck_it/hammer/wreck_particle.png" id="8_yeb76"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cf4qd"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(76, 152, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dsuh"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(0, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o065g"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(0, 152, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt5tx"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(380, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quoey"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(456, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7tvp"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(228, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s71lc"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(304, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_720u6"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(76, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hvdr"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(152, 0, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlqea"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(152, 152, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hm85r"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(228, 152, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtsxp"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(0, 76, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7kh8"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(76, 76, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0fy8"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(152, 76, 76, 76)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlbl7"]
+atlas = ExtResource("1_8a4ln")
+region = Rect2(228, 76, 76, 76)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dlq6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cf4qd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5dsuh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o065g")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt5tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quoey")
+}],
+"loop": true,
+"name": &"walk_back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7tvp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s71lc")
+}],
+"loop": true,
+"name": &"walk_forward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_720u6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hvdr")
+}],
+"loop": true,
+"name": &"walk_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlqea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hm85r")
+}],
+"loop": true,
+"name": &"win",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtsxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7kh8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0fy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlbl7")
+}],
+"loop": false,
+"name": &"wreck",
+"speed": 5.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rxwwt"]
+size = Vector3(4.50092, 4.09094, 0.506714)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5bmr0"]
+height = 4.13913
+radius = 2.47142
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e0mvo"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("8_yeb76")
+texture_repeat = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_lqjsq"]
+material = SubResource("StandardMaterial3D_e0mvo")
+size = Vector2(0.75, 0.75)
+
+[sub_resource type="Curve" id="Curve_hdxxi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.993464, 0.659686), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_tam20"]
+offsets = PackedFloat32Array(0.392086, 0.715827, 1)
+colors = PackedColorArray(0.435294, 0.2, 0, 0.870588, 0.992157, 0.435294, 0.247059, 0.729412, 0.992157, 0.588235, 0.45098, 0)
+
+[node name="Ralph" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_0kaj3")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0298554, 2.7935, 0)
+pixel_size = 0.08
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_8dlq6")
+animation = &"walk_forward"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("ralph", "animation", "state")]
+script = ExtResource("2_bakx0")
+ralph = NodePath("..")
+animation = NodePath("../AnimatedSprite3D")
+state = NodePath("Waiting")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("win_state", "move_to_target")]
+script = ExtResource("3_rj4mr")
+win_state = NodePath("../Win")
+move_to_target = NodePath("../MoveToTarget")
+
+[node name="Waiting" type="Node" parent="StateMachine"]
+script = ExtResource("5_wstu6")
+animation = "idle"
+stop_on_exit = true
+animation_property = &"anim"
+metadata/_custom_type_script = "uid://b1pgvr5ccdpm0"
+
+[node name="MoveToTarget" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "wreck")]
+script = ExtResource("5_j7kh6")
+idle = NodePath("../Idle")
+wreck = NodePath("../Wreck")
+speed = 2.0
+close_distance = 2.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/MoveToTarget"]
+stream = ExtResource("6_m1axq")
+
+[node name="Wreck" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle")]
+script = ExtResource("6_8v54q")
+idle = NodePath("../Idle")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/Wreck"]
+stream = ExtResource("8_wryu2")
+
+[node name="Win" type="Node" parent="StateMachine"]
+script = ExtResource("7_8doe5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02005, 2.03348, 0.0175171)
+shape = SubResource("BoxShape3D_rxwwt")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12984, 0)
+shape = SubResource("CylinderShape3D_5bmr0")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 30
+lifetime = 1.6
+randomness = 1.0
+lifetime_randomness = 0.75
+mesh = SubResource("QuadMesh_lqjsq")
+emission_shape = 3
+emission_box_extents = Vector3(2, 0.1, 2)
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -1, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 5.0
+angular_velocity_min = -220.86
+angular_velocity_max = 185.52
+angle_min = -123.7
+angle_max = 150.2
+scale_amount_curve = SubResource("Curve_hdxxi")
+color_ramp = SubResource("Gradient_tam20")

@@ -1,0 +1,63 @@
+[gd_scene load_steps=13 format=3 uid="uid://byp8f4hgmn1om"]
+
+[ext_resource type="Texture2D" uid="uid://lu5gt6wwc7br" path="res://levels/wreck_it/crate/box.png" id="1_5m7pg"]
+[ext_resource type="Script" uid="uid://b43fcpbg3jd5k" path="res://levels/wreck_it/crate/broken_ralph_crate.gd" id="1_p0oat"]
+[ext_resource type="AudioStream" uid="uid://brq4gk6ga477o" path="res://levels/wreck_it/crate/audio/explodify0.wav" id="3_1uw0h"]
+[ext_resource type="AudioStream" uid="uid://clb7ijr1saibl" path="res://levels/wreck_it/crate/audio/explodify2.wav" id="4_dmp7d"]
+[ext_resource type="AudioStream" uid="uid://m5q48dghaob1" path="res://levels/wreck_it/crate/audio/explodify3.wav" id="5_cuoxl"]
+[ext_resource type="AudioStream" uid="uid://b3axuw3uq1dn7" path="res://levels/wreck_it/crate/audio/explodify4.wav" id="6_id2ra"]
+[ext_resource type="AudioStream" uid="uid://3ckmp6v30rk4" path="res://levels/wreck_it/crate/audio/explodify5.wav" id="7_2nvyi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5m7pg"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_4idbn"]
+material = SubResource("StandardMaterial3D_5m7pg")
+size = Vector2(0.2, 0.4)
+
+[sub_resource type="Curve" id="Curve_p0oat"]
+_data = [Vector2(0.400641, 0.496774), 0.0, 0.0, 0, 0, Vector2(0.663462, 1), 0.0, 0.0, 0, 0, Vector2(0.964744, 0.245161), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_nvoce"]
+offsets = PackedFloat32Array(0.342657, 0.786713, 1)
+colors = PackedColorArray(0.972549, 0.27451, 0.321569, 1, 0.819608, 0.192157, 0.211765, 0.596078, 0.584314, 0, 0, 0)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q7n4r"]
+streams_count = 5
+stream_0/stream = ExtResource("3_1uw0h")
+stream_1/stream = ExtResource("4_dmp7d")
+stream_2/stream = ExtResource("5_cuoxl")
+stream_3/stream = ExtResource("6_id2ra")
+stream_4/stream = ExtResource("7_2nvyi")
+
+[node name="BrokenCrate" type="Node3D"]
+script = ExtResource("1_p0oat")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80134, 0)
+pixel_size = 0.05
+texture_filter = 2
+texture = ExtResource("1_5m7pg")
+hframes = 4
+frame = 3
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500837, 0)
+lifetime = 0.77
+explosiveness = 0.31
+randomness = 1.0
+mesh = SubResource("QuadMesh_4idbn")
+particle_flag_rotate_y = true
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -5, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+angular_velocity_min = 43.11
+angular_velocity_max = 275.93
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_p0oat")
+color_ramp = SubResource("Gradient_nvoce")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_q7n4r")
