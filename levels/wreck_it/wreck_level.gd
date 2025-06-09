@@ -18,17 +18,12 @@ signal destruction_level_changed(float)
 func _ready():
 	ralph.crate_targets = crate_container
 	ralph.game_over.connect(_on_game_over)
-	
+
 	for crate in crate_container.get_children():
 		crate.on_damage_change.connect(_on_crate_damage_change)
-		
+
 	max_destruction = crate_container.get_child_count() * (RalphCrate.MAX_DAMAGE + 1)
 	destruction_level_changed.connect(ui._on_destruction_level_change)
-	
-	player_selection.player_details_ready.connect(func (_x): players.sync_inputs_to_players())
-	players.player_update_complete.connect(_on_players_updated)
-
-	players.sync_inputs_to_players()
 
 	overlay.display_text(["Ready", "Set", "Go!"], 1.5)
 	overlay.text_display_over.connect(
@@ -41,12 +36,6 @@ func _ready():
 func _on_crate_damage_change(value: int):
 	destruction_level += value
 	destruction_level_changed.emit(1.0 * destruction_level / max_destruction)
-
-func _on_players_updated():
-	var players_array: Array[Player] = []
-	for child in players.get_children():
-		players_array.append(child as Player)
-	camera.players = players_array
 
 func _on_game_over():
 	print("Game Over")

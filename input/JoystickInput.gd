@@ -1,9 +1,9 @@
-extends PlayerInput
-class_name JoystickInput
+class_name JoystickInput extends PlayerInput
 
-var index: int = 0
+@export var index: int = 0
+@export var deadzone: float = 0.09
 
-func _init(_index: int):
+func _init(_index: int=0):
 	index = _index
 
 	accept_name = 'joystick_%s_accept' % index
@@ -15,6 +15,8 @@ func _init(_index: int):
 	create_action(menu_name, JOY_BUTTON_START)
 	
 func create_action(action_name: String, button: JoyButton):
+	if InputMap.has_action(action_name):
+		return
 	InputMap.add_action(action_name)
 	var evt := InputEventJoypadButton.new()
 	evt.device = index
@@ -24,8 +26,17 @@ func create_action(action_name: String, button: JoyButton):
 func _to_string() -> String:
 	return "Joystick Input %s [%s]" % [index, Input.get_joy_name(index)]
 
+func _apply_deadzone(value: float) -> float:
+	if abs(value) < deadzone:
+		value = 0.0
+	return value
+
+func get_move_direction() -> Vector2:
+	var result := Vector2(get_horizontal(), get_vertical())
+	return _apply_deadzone(result.length()) * result
+
 func get_horizontal() -> float:
-	return Input.get_joy_axis(index, JOY_AXIS_LEFT_X)
+	return _apply_deadzone(Input.get_joy_axis(index, JOY_AXIS_LEFT_X))
 
 func get_vertical() -> float:
-	return Input.get_joy_axis(index, JOY_AXIS_LEFT_Y)
+	return _apply_deadzone(Input.get_joy_axis(index, JOY_AXIS_LEFT_Y))

@@ -13,7 +13,7 @@ viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wsstp"]
 resource_local_to_scene = true
-render_priority = 0
+render_priority = 2
 shader = ExtResource("2_0an8e")
 shader_parameter/flash = 0.0
 shader_parameter/flash_color = Color(0.917647, 0.0627451, 0, 1)
@@ -24,13 +24,15 @@ radius = 0.391008
 height = 2.91192
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 2
 script = ExtResource("1_3nwc1")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70051, -0.371238, 0)
-material_override = SubResource("ShaderMaterial_wsstp")
+material_overlay = SubResource("ShaderMaterial_wsstp")
 centered = false
 pixel_size = 0.005
+alpha_cut = 2
 texture = SubResource("ViewportTexture_5r27k")
 region_rect = Rect2(0, 0, 700, 764)
 
@@ -40,7 +42,7 @@ handle_input_locally = false
 size = Vector2i(700, 700)
 
 [node name="Offset" type="Node2D" parent="SubViewport"]
-position = Vector2(350, 600)
+position = Vector2(350, 625)
 
 [node name="Ellie" parent="SubViewport/Offset" instance=ExtResource("1_74jmb")]
 

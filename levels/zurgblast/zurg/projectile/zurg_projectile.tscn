@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b18iljn106to4"]
+
+[ext_resource type="Script" uid="uid://chwqqm8hsp1n3" path="res://levels/zurgblast/zurg/projectile/zurg_projectile.gd" id="1_ctacl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_124ju"]
+shading_mode = 0
+albedo_color = Color(2, 1, 0.3, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ctacl"]
+material = SubResource("StandardMaterial3D_124ju")
+radius = 0.1
+height = 0.2
+radial_segments = 16
+rings = 16
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_124ju"]
+radius = 0.1
+
+[node name="ZurgProjectile" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_ctacl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ctacl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_124ju")

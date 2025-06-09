@@ -1,14 +1,14 @@
 extends PlayerInput
 class_name KeyboardInput
 
-var index: int = 1
+@export var index: int = 1
 
 var left: String
 var right: String
 var up: String
 var down: String
 
-func _init(_index: int):
+func _init(_index: int = 1):
 	index = _index
 	
 	if index < 1 or index > 2:

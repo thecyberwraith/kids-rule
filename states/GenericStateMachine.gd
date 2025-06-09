@@ -20,7 +20,8 @@ func transition_to_state(new_state: CharacterState):
 	if state != null:
 		state.on_exit_state(_get_data())
 	state = new_state
-	state.on_enter_state(_get_data())
+	if state != null:
+		state.on_enter_state(_get_data())
 
 func _get_data():
 	return null

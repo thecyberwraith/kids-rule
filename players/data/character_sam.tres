@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterInfo" load_steps=2 format=3 uid="uid://bpkvr5ro5mvrv"]
+
+[ext_resource type="Script" uid="uid://coldsirmm8rg3" path="res://players/data/character_info.gd" id="1_3r53a"]
+
+[resource]
+script = ExtResource("1_3r53a")
+name = "Sam"
+head = "res://players/sam_head.png"
+path = "res://players/sam.tscn"
+metadata/_custom_type_script = "uid://coldsirmm8rg3"

@@ -7,7 +7,7 @@ class_name FallState
 @export_range(1,100) var fall_speed: float
 
 func on_enter_state(data: StateMachine.Dependencies):
-	data.visuals.play("fall")
+	data.animations.play("fall")
 
 func process(_d: float, data: StateMachine.Dependencies) -> CharacterState:
 	if data.character.is_on_floor():

@@ -19,7 +19,7 @@ var input: PlayerInput:
 var character_idx: int = -1:
 	set(value):
 		character_idx = value
-		character_ui.text =  PlayerSelection.AvailableCharacters[character_idx].name
+		character_ui.text =  Characters.all[character_idx].name
 
 func _ready():
 	if character_idx == -1:
@@ -36,5 +36,8 @@ func _process(delta):
 	var horiz := input.get_horizontal()
 	
 	if abs(horiz) > 0.5:
-		character_idx = wrapi(character_idx+(horiz/abs(horiz)), 0, PlayerSelection.AvailableCharacters.size())
+		character_idx = wrapi(character_idx+(horiz/abs(horiz)), 0, Characters.all.size())
 		input_delay = max_delay
+
+func get_game_info() -> GameInfo:
+	return null

@@ -1,0 +1,255 @@
+[gd_scene load_steps=22 format=3 uid="uid://b1lrxtlhfo26j"]
+
+[ext_resource type="PackedScene" uid="uid://wit0fthjhfxp" path="res://levels/zurgblast/zurg/zurg.tscn" id="1_0onmx"]
+[ext_resource type="Script" uid="uid://c8jne24r5n46n" path="res://levels/zurgblast/zurg_level.gd" id="1_we5ad"]
+[ext_resource type="PackedScene" uid="uid://bkr3mjohaxrrn" path="res://ui/player_selection.tscn" id="2_4xxc5"]
+[ext_resource type="Theme" uid="uid://bcuyjrsty3xqf" path="res://ui/generic_health_bar_style.theme" id="3_rylj8"]
+[ext_resource type="PackedScene" uid="uid://dw4j174xxubhl" path="res://ui/overlay.tscn" id="4_84p6i"]
+[ext_resource type="Script" uid="uid://cqnh3l5ys3jgh" path="res://levels/zurgblast/player/player_manager.gd" id="4_gkxna"]
+[ext_resource type="Script" uid="uid://bk8xw6pdf4ykx" path="res://levels/zurgblast/player/player.gd" id="5_coj0v"]
+[ext_resource type="PackedScene" uid="uid://b2xtu7ba2rsl6" path="res://levels/zurgblast/player/RangerPlayer.tscn" id="7_hol4j"]
+[ext_resource type="Script" uid="uid://d0tkmyn62tdiv" path="res://levels/zurgblast/scrollables/scroller_spawner.gd" id="7_pcmxl"]
+[ext_resource type="PackedScene" uid="uid://3hm51s4mw4nl" path="res://levels/zurgblast/scrollables/Ramp.tscn" id="8_gkxna"]
+[ext_resource type="PackedScene" uid="uid://ci0ad734ni3k2" path="res://levels/zurgblast/scrollables/Fence.tscn" id="9_coj0v"]
+[ext_resource type="PackedScene" uid="uid://bisruuwu613kr" path="res://levels/zurgblast/scrollables/moving_wall.tscn" id="9_cwp6v"]
+[ext_resource type="Script" uid="uid://buqy0vcxby3ch" path="res://utility/scrolling/scrolling_camera.gd" id="9_pcmxl"]
+[ext_resource type="PackedScene" uid="uid://dlbyjymwfj72j" path="res://levels/zurgblast/mine/ZurgMine.tscn" id="13_r1ceo"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rsr1o"]
+sky_top_color = Color(0.707956, 0.759429, 0.831244, 1)
+sky_horizon_color = Color(0.93872, 0.997494, 1.03739, 1)
+ground_bottom_color = Color(0.00736446, 0.19099, 0.278755, 1)
+ground_horizon_color = Color(0.93872, 0.997494, 1.03739, 1)
+
+[sub_resource type="Sky" id="Sky_pqbpl"]
+sky_material = SubResource("ProceduralSkyMaterial_rsr1o")
+
+[sub_resource type="Environment" id="Environment_d2eag"]
+background_mode = 2
+sky = SubResource("Sky_pqbpl")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_s6qsd"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_coj0v"]
+plane = Plane(0, 0, 1, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_pcmxl"]
+plane = Plane(0, 0, -1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0onmx"]
+albedo_color = Color(0.260872, 0.248533, 0.251657, 1)
+metallic = 0.2
+
+[node name="ZurgLevel" type="Node3D"]
+script = ExtResource("1_we5ad")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerSelection" parent="CanvasLayer" node_paths=PackedStringArray("player_manager") instance=ExtResource("2_4xxc5")]
+player_manager = NodePath("../../Players")
+
+[node name="ZurgHealth" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/ZurgHealth"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("3_rylj8")
+fill_mode = 3
+show_percentage = false
+
+[node name="Overlay" parent="CanvasLayer" instance=ExtResource("4_84p6i")]
+visible = false
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_d2eag")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(0.997684, 0.0659079, -0.0167997, 0.00630861, 0.156263, 0.987695, 0.0677221, -0.985514, 0.155486, 0, 0, 0)
+light_color = Color(1, 1, 0.556863, 1)
+shadow_enabled = true
+
+[node name="Boundaries" type="StaticBody3D" parent="World"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Boundaries"]
+shape = SubResource("WorldBoundaryShape3D_s6qsd")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+shape = SubResource("WorldBoundaryShape3D_coj0v")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+shape = SubResource("WorldBoundaryShape3D_pcmxl")
+
+[node name="Zurg" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_0onmx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.37433, 1.94013, 4.0132)
+camera = NodePath("../Camera3D")
+
+[node name="Players" type="Node3D" parent="." node_paths=PackedStringArray("spawn_ray")]
+script = ExtResource("4_gkxna")
+spawn_ray = NodePath("../Camera3D/RayCast3D")
+zurg_player_script = ExtResource("5_coj0v")
+PlayerTemplate = ExtResource("7_hol4j")
+
+[node name="Scrollers" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("7_pcmxl")
+camera = NodePath("../Camera3D")
+ramp_scene = ExtResource("8_gkxna")
+
+[node name="Fences" type="Node3D" parent="Scrollers"]
+
+[node name="Front" type="Node3D" parent="Scrollers/Fences"]
+
+[node name="Fence2" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, 5)
+
+[node name="Fence10" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.25, 0, 5)
+
+[node name="Fence13" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.25, 0, 5)
+
+[node name="Fence4" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 5)
+
+[node name="Fence8" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 0, 5)
+
+[node name="Fence9" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, 0, 5)
+
+[node name="Fence12" parent="Scrollers/Fences/Front" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75, 0, 5)
+
+[node name="Back" type="Node3D" parent="Scrollers/Fences"]
+
+[node name="Fence" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+number = 23
+
+[node name="Fence3" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -5.007)
+number = 23
+
+[node name="Fence7" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5.007)
+number = 23
+
+[node name="Fence11" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5.007)
+number = 23
+
+[node name="Fence5" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5)
+number = 23
+
+[node name="Fence14" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+number = 23
+
+[node name="Fence6" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -5.007)
+number = 23
+
+[node name="Fence2" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.0535, 0, -5)
+number = 23
+
+[node name="Fence4" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0535, 0, -5.007)
+number = 23
+
+[node name="Fence8" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0535, 0, -5.007)
+number = 23
+
+[node name="Fence12" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.05347, 0, -5.007)
+number = 23
+
+[node name="Fence9" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.0535, 0, -5)
+number = 23
+
+[node name="Fence15" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0535, 0, -5)
+number = 23
+
+[node name="Fence18" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1101, 0, -5)
+number = 23
+
+[node name="Fence10" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0535, 0, -5.007)
+number = 23
+
+[node name="Fence13" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0574, 0, -5)
+number = 23
+
+[node name="Fence16" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0574, 0, -5.007)
+number = 23
+
+[node name="Fence17" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0574, 0, -5.007)
+number = 23
+
+[node name="Fence22" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1244, 0, -5.007)
+number = 23
+
+[node name="Fence23" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.2336, 0, -5.007)
+number = 23
+
+[node name="Fence19" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0574, 0, -5)
+number = 23
+
+[node name="Fence20" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.05737, 0, -5)
+number = 23
+
+[node name="Fence21" parent="Scrollers/Fences/Back" instance=ExtResource("9_coj0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0574, 0, -5.007)
+number = 23
+
+[node name="MovingWall" parent="Scrollers" node_paths=PackedStringArray("camera") instance=ExtResource("9_cwp6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.90265, 0, 0)
+camera = NodePath("../../Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.966237, 0.257656, 0, -0.257656, 0.966237, -0.308655, 2.4441, 6.3319)
+fov = 94.3
+size = 7.0
+near = 0.01
+far = 13.14
+script = ExtResource("9_pcmxl")
+metadata/_custom_type_script = "uid://buqy0vcxby3ch"
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.966237, -0.257656, 0, 0.257656, 0.966237, 0, 6.41128, -4.88455)
+target_position = Vector3(0, -10, 0)
+
+[node name="Floor" type="CSGBox3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.966237, -0.257656, 0, 0.257656, 0.966237, 0.308655, -0.730127, -6.74785)
+size = Vector3(46.0745, 0.1, 17.0146)
+material = SubResource("StandardMaterial3D_0onmx")
+
+[node name="ZurgMine" parent="." instance=ExtResource("13_r1ceo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30948, 0.458557, -1.60144)

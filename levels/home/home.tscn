@@ -1,13 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://dygbjwnjsndsg"]
+[gd_scene load_steps=21 format=3 uid="uid://dygbjwnjsndsg"]
 
 [ext_resource type="Script" uid="uid://b35qnfpxgfwu1" path="res://levels/home/home.gd" id="1_tno0q"]
-[ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://levels/multi_views/SharedCamera.gd" id="3_ho2oo"]
+[ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://multi_views/SharedCamera.gd" id="3_ho2oo"]
 [ext_resource type="Script" uid="uid://d2ddivf1l267l" path="res://levels/home/home_player_manager.gd" id="3_o827l"]
 [ext_resource type="PackedScene" uid="uid://bkr3mjohaxrrn" path="res://ui/player_selection.tscn" id="4_dsat6"]
 [ext_resource type="Texture2D" uid="uid://cw6ot2fiv1rh6" path="res://levels/wreck_it/ralph/ralph.png" id="5_e5gns"]
 [ext_resource type="PackedScene" uid="uid://c2knxvd5re80w" path="res://levels/home/load_game_area.tscn" id="6_hb728"]
 [ext_resource type="PackedScene" uid="uid://d1t1buja4b2rb" path="res://levels/wreck_it/wreck_level.tscn" id="7_32qkc"]
 [ext_resource type="AudioStream" uid="uid://6mlpke8crd16" path="res://levels/home/audio/The-Life-and-Times-of-Inky-Blinky-Pinky-and-Clyde_Looping.mp3" id="8_pljee"]
+[ext_resource type="Texture2D" uid="uid://bnwfbag8ounsm" path="res://levels/zurgblast/player/player_sprites.png" id="9_tr1w2"]
+[ext_resource type="PackedScene" uid="uid://b1lrxtlhfo26j" path="res://levels/zurgblast/ZurgLevel.tscn" id="10_a2e86"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_god8x"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -45,6 +47,11 @@ albedo_color = Color(0.791564, 0, 0.11551, 1)
 [node name="Home" type="Node3D"]
 script = ExtResource("1_tno0q")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.905569, -0.273237, 0.324479, 0, 0.764921, 0.644124, -0.424199, -0.583298, 0.692689, 0, 0, 0)
+light_color = Color(1, 1, 0.729412, 1)
+shadow_enabled = true
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2mbeu")
 
@@ -74,31 +81,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, -0.530215, 0)
 size = Vector3(53, 1, 66)
 material = SubResource("StandardMaterial3D_qspqk")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.859797, 0.442224, -0.255317, 8.35688e-09, 0.499998, 0.866027, 0.510636, -0.744607, 0.429897, 0, 0, 0)
-shadow_enabled = true
-
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="WorldEnvironment"]
-transform = Transform3D(5.2233, 0, 0, 0, 5.2233, 0, 0, 0, 5.2233, -13.9313, 0, 0.391598)
+transform = Transform3D(5.2233, 0, 0, 0, 5.2233, 0, 0, 0, 5.2233, -14.9313, 0, 0.391598)
 use_collision = true
-polygon = PackedVector2Array(0, 0, -0.0113032, 0.581837, 0.460732, 0.307547, 1, 0)
+polygon = PackedVector2Array(0, 0, 0.0748806, 0.458277, 0.74582, 0.434315, 1.62643, -0.00898419)
 material = SubResource("StandardMaterial3D_eneiq")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="CSGBox3D2" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2, -2.15918)
+use_collision = true
+size = Vector3(9, 1, 5.31836)
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("players_node")]
 transform = Transform3D(1, 0, 0, 0, 0.952252, 0.305313, 0, -0.305313, 0.952252, 0, 6.44569, 10.2217)
 script = ExtResource("3_ho2oo")
+players_node = NodePath("../Players")
 
 [node name="Players" type="Node3D" parent="."]
 script = ExtResource("3_o827l")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PlayerSelection" parent="CanvasLayer" instance=ExtResource("4_dsat6")]
+[node name="PlayerSelection" parent="CanvasLayer" node_paths=PackedStringArray("player_manager") instance=ExtResource("4_dsat6")]
+game_info_key = null
+player_manager = NodePath("../../Players")
 
 [node name="Ralph" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.11486)
 offset = Vector2(0, 28)
 pixel_size = 0.06
+shaded = true
+alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("5_e5gns")
 region_enabled = true
@@ -112,3 +125,19 @@ confirm_duration = 5.0
 stream = ExtResource("8_pljee")
 autoplay = true
 bus = &"BG Music"
+
+[node name="Ranger" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.9974, 3.52935, -2.06516)
+pixel_size = 0.07
+shaded = true
+double_sided = false
+alpha_cut = 2
+texture_filter = 2
+texture = ExtResource("9_tr1w2")
+region_enabled = true
+region_rect = Rect2(61, 0, 36, 34)
+
+[node name="LoadGameArea" parent="Ranger" instance=ExtResource("6_hb728")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.962646, 0)
+scene = ExtResource("10_a2e86")
+confirm_duration = 3.0

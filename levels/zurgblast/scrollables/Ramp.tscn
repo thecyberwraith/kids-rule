@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://3hm51s4mw4nl"]
+
+[ext_resource type="Script" uid="uid://c0gda2ktbl2vb" path="res://levels/zurgblast/scrollables/ramp.gd" id="1_rmst3"]
+
+[node name="Ramp" type="Node3D"]
+script = ExtResource("1_rmst3")
+flat_length = 2.45
+height = 1.123
+ramp_angle = 13.659
+
+[node name="box" type="CSGBox3D" parent="."]
+transform = Transform3D(2.45, 0, 0, 0, 1.123, 0, 0, 0, 1, 5.8461, 0.5615, 0)
+use_collision = true
+collision_mask = 5
+size = Vector3(1, 1, 1.5)
+
+[node name="right" type="CSGPolygon3D" parent="."]
+transform = Transform3D(4.6211, 0, 0, 0, 1.123, 0, 0, 0, 1, 7.0711, 0, 0.75)
+use_collision = true
+collision_mask = 5
+polygon = PackedVector2Array(0, 0, 0, 1, 1, 0)
+depth = 1.5
+
+[node name="left" type="CSGPolygon3D" parent="."]
+transform = Transform3D(4.6211, 0, 0, 0, 1.123, 0, 0, 0, 1, 4.6211, 0, 0.75)
+use_collision = true
+collision_mask = 5
+polygon = PackedVector2Array(0, 0, 0, 1, -1, 0)
+depth = 1.5
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(0, 0, -0.5, 11.6922, 1.123, 1)

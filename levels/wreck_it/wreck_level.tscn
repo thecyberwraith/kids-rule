@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b8w40mj4v642v" path="res://levels/wreck_it/crate/ralph_crate.tscn" id="3_suu7k"]
 [ext_resource type="Script" uid="uid://7eqhalkmc8is" path="res://levels/wreck_it/players/ralph_player_manager.gd" id="4_d8f52"]
 [ext_resource type="PackedScene" uid="uid://bkr3mjohaxrrn" path="res://ui/player_selection.tscn" id="5_j2gol"]
-[ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://levels/multi_views/SharedCamera.gd" id="5_pv8mj"]
+[ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://multi_views/SharedCamera.gd" id="5_pv8mj"]
 [ext_resource type="PackedScene" uid="uid://d3x4omu7pbiet" path="res://levels/wreck_it/players/ralph_player_state_machine.tscn" id="5_qiflm"]
 [ext_resource type="PackedScene" uid="uid://b3dpq7cll3yq6" path="res://levels/wreck_it/ralph_ui.tscn" id="6_5emm0"]
 [ext_resource type="Script" uid="uid://dep0vgxo6b1wo" path="res://levels/wreck_it/players/ralph_player.gd" id="6_lwjf2"]
@@ -44,11 +44,12 @@ plane = Plane(0, 0, -1, 0)
 [node name="WreckLevel" type="Node3D"]
 script = ExtResource("1_jpqyn")
 
-[node name="Environment" type="Node3D" parent="."]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(0.891006, -0.423266, 0.164174, 0, 0.361625, 0.932324, -0.453991, -0.830706, 0.32221, 0, 0, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.997684, 0.0416871, -0.0537426, 0, 0.790155, 0.612907, 0.0680153, -0.611488, 0.788325, 0, 0, 0)
+light_color = Color(1, 1, 0.780392, 1)
 shadow_enabled = true
+
+[node name="Environment" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_qo22e")
@@ -104,9 +105,10 @@ RalphPlayerScript = ExtResource("6_lwjf2")
 spawn_locations = NodePath("../SpawnPoints")
 selection = NodePath("../CanvasLayer/PlayerSelection")
 
-[node name="SharedCamera" type="Camera3D" parent="."]
+[node name="SharedCamera" type="Camera3D" parent="." node_paths=PackedStringArray("players_node")]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 9)
 script = ExtResource("5_pv8mj")
+players_node = NodePath("../Players")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -114,8 +116,10 @@ script = ExtResource("5_pv8mj")
 
 [node name="Overlay" parent="CanvasLayer" instance=ExtResource("8_nksbn")]
 
-[node name="PlayerSelection" parent="CanvasLayer" instance=ExtResource("5_j2gol")]
+[node name="PlayerSelection" parent="CanvasLayer" node_paths=PackedStringArray("player_manager") instance=ExtResource("5_j2gol")]
 visible = false
+game_info_key = null
+player_manager = NodePath("../../Players")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_jb4ij")

@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddtsjuq1v7xhd"]
+
+[ext_resource type="Script" uid="uid://gwvyl2a81a4q" path="res://levels/zurgblast/player/laser/laser_beam.gd" id="1_7exgt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7exgt"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(8, 0.057, 0.033, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7exgt"]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.3
+radial_segments = 16
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ogsu"]
+size = Vector3(0.3, 0.002, 0.002)
+
+[node name="LaserBeam" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 5
+gravity_scale = 0.0
+script = ExtResource("1_7exgt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_7exgt")
+mesh = SubResource("CylinderMesh_7exgt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0ogsu")
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 1.75
+one_shot = true
+autostart = true

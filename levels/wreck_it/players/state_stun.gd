@@ -7,7 +7,7 @@ var time_in_state: float = 0.0
 
 func on_enter_state(data: StateMachine.Dependencies):
 	super.on_enter_state(data)
-	data.character.sprite_3d.material_override.set_shader_parameter("flash", 0.5)
+	data.character.sprite_3d.material_overlay.set_shader_parameter("flash", 0.5)
 	get_node("AudioStreamPlayer").play()
 	time_in_state = 0.0
 
@@ -18,4 +18,4 @@ func process(delta, _data: StateMachine.Dependencies):
 	
 func on_exit_state(data: StateMachine.Dependencies):
 	super.on_enter_state(data)
-	data.character.sprite_3d.material_override.set_shader_parameter("flash", 0.0)
+	data.character.sprite_3d.material_overlay.set_shader_parameter("flash", 0.0)

@@ -1,0 +1,127 @@
+[gd_scene load_steps=18 format=3 uid="uid://dlbyjymwfj72j"]
+
+[ext_resource type="Script" uid="uid://wktmtilwowi4" path="res://levels/zurgblast/mine/zurg_mine.gd" id="1_8233u"]
+[ext_resource type="Texture2D" uid="uid://docssiv1mywb4" path="res://levels/zurgblast/mine/sprites/mine_1.png" id="1_j5ncg"]
+[ext_resource type="Texture2D" uid="uid://c10ac6rsgcjmn" path="res://levels/zurgblast/mine/sprites/mine_2.png" id="2_8233u"]
+[ext_resource type="Texture2D" uid="uid://dwbqoel5n5mkk" path="res://levels/zurgblast/mine/sprites/mine_3.png" id="3_3tkg0"]
+[ext_resource type="Texture2D" uid="uid://cf2jcwa58y0ad" path="res://levels/zurgblast/mine/sprites/mine_4.png" id="4_p6sts"]
+[ext_resource type="Texture2D" uid="uid://cn6tseirwlmn7" path="res://levels/zurgblast/mine/sprites/mine_5.png" id="5_t2ysk"]
+[ext_resource type="Texture2D" uid="uid://b8jxumhdihovi" path="res://levels/zurgblast/mine/sprites/mine_6.png" id="6_qfcv7"]
+[ext_resource type="Texture2D" uid="uid://dtbf1lkramoma" path="res://levels/zurgblast/mine/sprites/mine_7.png" id="7_7e6au"]
+[ext_resource type="Texture2D" uid="uid://yvwpl38rk3jc" path="res://levels/zurgblast/mine/sprites/mine_8.png" id="8_hai5x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ror5x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j5ncg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_8233u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3tkg0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_p6sts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t2ysk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qfcv7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7e6au")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hai5x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3tkg0"]
+radius = 0.045388
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_p6sts"]
+radius = 0.340247
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8233u"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_3tkg0"]
+material = SubResource("StandardMaterial3D_8233u")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="Curve" id="Curve_p6sts"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.393258), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_t2ysk"]
+offsets = PackedFloat32Array(0, 0.664894, 1)
+colors = PackedColorArray(0.916888, 0, 0.118763, 1, 0.503, 0.074, 0.122, 0.961, 0.42, 0.255, 0.251, 0)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8233u"]
+radius = 1.04827
+
+[node name="ZurgMine" type="RigidBody3D"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_8233u")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ror5x")
+frame_progress = 0.488134
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_3tkg0")
+
+[node name="DetonationArea" type="Area3D" parent="."]
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DetonationArea"]
+shape = SubResource("SphereShape3D_p6sts")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-0.471577, -0.448347, -0.466931, 0.943155, 0.896694, 0.933863)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 16
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.38
+mesh = SubResource("BoxMesh_3tkg0")
+emission_shape = 1
+emission_sphere_radius = 0.5
+particle_flag_align_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -8, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 7.0
+angular_velocity_min = -600.0
+angular_velocity_max = 600.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+orbit_velocity_curve = null
+damping_min = 2.0
+damping_max = 4.0
+angle_min = -48.8
+angle_max = 109.8
+scale_amount_min = 0.8
+scale_amount_curve = SubResource("Curve_p6sts")
+color_ramp = SubResource("Gradient_t2ysk")
+
+[node name="DamageArea" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea"]
+shape = SubResource("SphereShape3D_8233u")

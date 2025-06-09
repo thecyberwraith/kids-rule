@@ -1,0 +1,141 @@
+[gd_scene load_steps=20 format=3 uid="uid://d1t1buja4b2rb"]
+
+[ext_resource type="Script" uid="uid://cluqp7wjuwwm3" path="res://levels/wreck_it/wreck_level.gd" id="1_jpqyn"]
+[ext_resource type="PackedScene" uid="uid://dkx2m2w8ydj7q" path="res://levels/wreck_it/ralph/ralph.tscn" id="2_o3b65"]
+[ext_resource type="PackedScene" uid="uid://b8w40mj4v642v" path="res://levels/wreck_it/crate/ralph_crate.tscn" id="3_suu7k"]
+[ext_resource type="Script" uid="uid://7eqhalkmc8is" path="res://levels/wreck_it/players/ralph_player_manager.gd" id="4_d8f52"]
+[ext_resource type="PackedScene" uid="uid://bkr3mjohaxrrn" path="res://ui/player_selection.tscn" id="5_j2gol"]
+[ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://levels/multi_views/SharedCamera.gd" id="5_pv8mj"]
+[ext_resource type="PackedScene" uid="uid://d3x4omu7pbiet" path="res://levels/wreck_it/players/ralph_player_state_machine.tscn" id="5_qiflm"]
+[ext_resource type="PackedScene" uid="uid://b3dpq7cll3yq6" path="res://levels/wreck_it/ralph_ui.tscn" id="6_5emm0"]
+[ext_resource type="Script" uid="uid://dep0vgxo6b1wo" path="res://levels/wreck_it/players/ralph_player.gd" id="6_lwjf2"]
+[ext_resource type="AudioStream" uid="uid://giwwhhih4vfp" path="res://levels/wreck_it/A Journey Awaits.ogg" id="8_jb4ij"]
+[ext_resource type="PackedScene" uid="uid://dw4j174xxubhl" path="res://ui/overlay.tscn" id="8_nksbn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m1x5t"]
+sky_horizon_color = Color(0.608232, 0.6673, 0.6375, 1)
+ground_bottom_color = Color(0.0479271, 0.2152, 0, 1)
+ground_horizon_color = Color(0.608232, 0.6673, 0.6375, 1)
+
+[sub_resource type="Sky" id="Sky_l2pc3"]
+sky_material = SubResource("ProceduralSkyMaterial_m1x5t")
+
+[sub_resource type="Environment" id="Environment_qo22e"]
+background_mode = 2
+sky = SubResource("Sky_l2pc3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krafg"]
+albedo_color = Color(1.34525e-05, 0.647665, 0.0803479, 1)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_nksbn"]
+plane = Plane(0, 0, 1, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_wetmk"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qiflm"]
+plane = Plane(-1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_lwjf2"]
+plane = Plane(0, 0, -1, 0)
+
+[node name="WreckLevel" type="Node3D"]
+script = ExtResource("1_jpqyn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.997684, 0.0416871, -0.0537426, 0, 0.790155, 0.612907, 0.0680153, -0.611488, 0.788325, 0, 0, 0)
+light_color = Color(1, 1, 0.780392, 1)
+shadow_enabled = true
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_qo22e")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015686, -0.252441, 0.078064)
+use_collision = true
+size = Vector3(25, 0.5, 25)
+material = SubResource("StandardMaterial3D_krafg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.4421)
+shape = SubResource("WorldBoundaryShape3D_nksbn")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5913, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_wetmk")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5115, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_qiflm")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Environment/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.5139)
+shape = SubResource("WorldBoundaryShape3D_lwjf2")
+
+[node name="Ralph" parent="." instance=ExtResource("2_o3b65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00660515, -0.877095)
+
+[node name="Crates" type="Node3D" parent="."]
+
+[node name="Crate5" parent="Crates" instance=ExtResource("3_suu7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.49213, 0.0101322, -0.614367)
+
+[node name="Crate6" parent="Crates" instance=ExtResource("3_suu7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.21453, 0.0101322, -8.00622)
+
+[node name="Crate7" parent="Crates" instance=ExtResource("3_suu7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.34504, 0.0101322, -8.94811)
+
+[node name="Crate3" parent="Crates" instance=ExtResource("3_suu7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.72529, 0.0101322, -5.79174)
+
+[node name="Crate8" parent="Crates" instance=ExtResource("3_suu7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4477, 0.0101322, -0.513173)
+
+[node name="Players" type="Node3D" parent="." node_paths=PackedStringArray("spawn_locations", "selection")]
+script = ExtResource("4_d8f52")
+RalphPlayerMachineTemplate = ExtResource("5_qiflm")
+RalphPlayerScript = ExtResource("6_lwjf2")
+spawn_locations = NodePath("../SpawnPoints")
+selection = NodePath("../CanvasLayer/PlayerSelection")
+
+[node name="SharedCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 9)
+script = ExtResource("5_pv8mj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RalphUI" parent="CanvasLayer" instance=ExtResource("6_5emm0")]
+
+[node name="Overlay" parent="CanvasLayer" instance=ExtResource("8_nksbn")]
+
+[node name="PlayerSelection" parent="CanvasLayer" node_paths=PackedStringArray("player_manager") instance=ExtResource("5_j2gol")]
+visible = false
+game_info_key = null
+player_manager = NodePath("../../Players")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_jb4ij")
+autoplay = true
+bus = &"BG Music"
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="Marker3D" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
+
+[node name="Marker3D2" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.41077, 0, -2)
+
+[node name="Marker3D3" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.41077, 0, 2.41516)
+
+[node name="Marker3D4" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.18445, 0, 2.41516)

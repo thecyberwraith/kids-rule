@@ -25,6 +25,7 @@ offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(1, 1, 1, 0.698039, 0.65098, 0.65098, 0.65098, 0.596078, 1, 1, 1, 0)
 
 [node name="LoadGameArea" type="Area3D"]
+collision_mask = 2
 script = ExtResource("1_qxj6q")
 color_gradient = SubResource("Gradient_k06b7")
 

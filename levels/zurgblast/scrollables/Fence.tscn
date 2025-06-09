@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://ci0ad734ni3k2"]
+
+[ext_resource type="Texture2D" uid="uid://dg1o4tri38gc7" path="res://levels/zurgblast/scrollables/Electric Fence.png" id="1_43q66"]
+[ext_resource type="Script" uid="uid://b6x5wn0d2c1sw" path="res://levels/zurgblast/scrollables/fence.gd" id="1_qq00e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qq00e"]
+atlas = ExtResource("1_43q66")
+region = Rect2(0, 0, 82, 83)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jq5t"]
+atlas = ExtResource("1_43q66")
+region = Rect2(82, 0, 82, 83)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkeb6"]
+atlas = ExtResource("1_43q66")
+region = Rect2(164, 0, 82, 83)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7oawg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qq00e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jq5t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rkeb6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Fence" type="Node3D"]
+script = ExtResource("1_qq00e")
+
+[node name="Sprite" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00978708, 0.759636, 0)
+pixel_size = 0.025
+alpha_cut = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_7oawg")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.743757, 0)
+aabb = AABB(-1.15, -0.735436, -0.2119, 2.3, 1.38201, 0.423801)

@@ -32,7 +32,7 @@ var _machine: StateMachine
 
 var equipment: Array[Equipment] = []
 
-var input: PlayerInput = PlayerInput.new():
+@export var input: PlayerInput = PlayerInput.new():
 	set(value):
 		input = value
 		if state_machine != null:
@@ -43,7 +43,7 @@ var _visuals: PlayerVisuals
 
 var visuals: PlayerVisuals:
 	set(value):
-		
+		print("Overwriting visuals")
 		var old_visuals := visuals
 		var old_equipment := equipment.duplicate()
 		
@@ -78,6 +78,10 @@ var visuals: PlayerVisuals:
 func _ready():
 	visuals = visuals # Connect things only when ready
 	input = input
+
+## Convenience hook for connected signals outside of the ready function.
+func on_level_manager_prep_done():
+	pass
 
 func equip(item: Equipment):
 	if equipment.any(func(x): return x.key == item.key):
