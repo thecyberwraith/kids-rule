@@ -9,15 +9,15 @@ extends Node3D
 func _ready():
 	zurg.damage.death.connect(game_won)
 	zurg.damage.health.value_changed.connect(update_zurg_health)
-	
+
 	update_zurg_health(zurg.get_node("DamageHandler").health, 0)
 	players.all_health_drained.connect(game_lost)
-	
+
 	overlay.text_display_over.connect(func(): 
 		players.prepare_unload()
 		get_tree().change_scene_to_file("res://levels/home/home.tscn")
 	)
-	
+
 func update_zurg_health(v: CharacterResource, _diff):
 	zurg_bar.min_value = v.min_value
 	zurg_bar.max_value = v.max_value

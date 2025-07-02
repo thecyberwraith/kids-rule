@@ -13,11 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://ci0ad734ni3k2" path="res://levels/zurgblast/scrollables/Fence.tscn" id="9_coj0v"]
 [ext_resource type="PackedScene" uid="uid://bisruuwu613kr" path="res://levels/zurgblast/scrollables/moving_wall.tscn" id="9_cwp6v"]
 [ext_resource type="Script" uid="uid://buqy0vcxby3ch" path="res://utility/scrolling/scrolling_camera.gd" id="9_pcmxl"]
-[ext_resource type="PackedScene" uid="uid://dlbyjymwfj72j" path="res://levels/zurgblast/mine/ZurgMine.tscn" id="13_r1ceo"]
+[ext_resource type="AudioStream" uid="uid://dqmg2nhafh8o" path="res://levels/zurgblast/Orbital Colossus.mp3" id="15_lhjra"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rsr1o"]
-sky_top_color = Color(0.707956, 0.759429, 0.831244, 1)
-sky_horizon_color = Color(0.93872, 0.997494, 1.03739, 1)
+sky_top_color = Color(1.92523e-07, 0.504074, 0.732581, 1)
+sky_horizon_color = Color(0.938981, 0.948337, 0.750131, 1)
 ground_bottom_color = Color(0.00736446, 0.19099, 0.278755, 1)
 ground_horizon_color = Color(0.93872, 0.997494, 1.03739, 1)
 
@@ -251,5 +251,8 @@ transform = Transform3D(1, 0, 0, 0, 0.966237, -0.257656, 0, 0.257656, 0.966237, 
 size = Vector3(46.0745, 0.1, 17.0146)
 material = SubResource("StandardMaterial3D_0onmx")
 
-[node name="ZurgMine" parent="." instance=ExtResource("13_r1ceo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30948, 0.458557, -1.60144)
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_lhjra")
+volume_db = -8.0
+autoplay = true
+bus = &"BG Music"

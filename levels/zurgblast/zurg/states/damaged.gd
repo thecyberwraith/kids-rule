@@ -1,9 +1,13 @@
 extends CharacterState
 
 var next_state: CharacterState = null
+
 @export var wander: CharacterState
 
+@onready var sound: AudioStreamPlayer = $AudioStreamPlayer
+
 func on_enter_state(zurg: Zurg):
+	sound.play()
 	next_state = null
 	zurg.damage.invincibility_stop.connect(
 		func(): set_parameters(zurg, 0.0, 0.0),

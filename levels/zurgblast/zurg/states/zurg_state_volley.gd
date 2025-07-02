@@ -3,6 +3,7 @@ extends CharacterState
 @export var wander: CharacterState
 
 @onready var timer: Timer = $Timer
+@onready var sound: AudioStreamPlayer = $AudioStreamPlayer
 
 var target: Node3D
 var amount: int = 3
@@ -17,7 +18,12 @@ func on_enter_state(zurg: Zurg):
 			target = player
 
 	fired = 0
-	amount = 3
+	
+	if zurg.damage.health.percentage < 0.6:
+		amount = 5
+	else:
+		amount = 3
+	
 	timer.start()
 	need_fired = true
 	timer.timeout.connect(update_needs_fired)
@@ -28,8 +34,6 @@ func update_needs_fired():
 func process(_dt, zurg: Zurg):
 	if amount == fired:
 		return wander
-	if need_fired:
-		fire(zurg)
 	
 	if target == null:
 		return null
@@ -37,6 +41,9 @@ func process(_dt, zurg: Zurg):
 	var look_dir := target.global_position - zurg.global_position
 	var angle := Vector2.LEFT.angle_to(Vector2(look_dir.x, -look_dir.z))
 	zurg.rotation = Vector3(0,angle,0)
+	
+	if need_fired:
+		fire(zurg)
 	
 	return null
 
@@ -48,6 +55,8 @@ func fire(zurg: Zurg):
 		direction = ZurgLauncher.FireDirection.LOW
 
 	zurg.launcher.fire(direction, 6)
+	sound.play()
+	
 	need_fired = false
 
 func on_exit_state(zurg: Zurg):

@@ -3,6 +3,8 @@ extends CharacterState
 @export var idle: CharacterState
 @onready var timer: Timer = $Timer
 
+@onready var sound: AudioStreamPlayer = $AudioStreamPlayer
+
 var next_state: CharacterState
 
 func set_shader_parameters(data, values):
@@ -13,6 +15,7 @@ func set_shader_parameters(data, values):
 
 func on_enter_state(data: StateMachine.Dependencies):
 	next_state = null
+	sound.play()
 	set_shader_parameters(data, [16, 0.4])
 	timer.timeout.connect(func():
 		next_state = idle

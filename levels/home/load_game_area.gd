@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var scene: PackedScene
+@export var scene: String
 @export var color_gradient: Gradient
 @export var confirm_duration: float = .0
 
@@ -22,7 +22,7 @@ func _process(delta):
 			confirmation_time += delta
 		else:
 			print("Switching to scene!")
-			get_tree().change_scene_to_packed(scene)
+			get_tree().change_scene_to_file(scene)
 	
 	sample_value = lerpf(
 		sample_value,

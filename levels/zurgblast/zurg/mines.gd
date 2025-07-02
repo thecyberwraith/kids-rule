@@ -3,7 +3,9 @@ extends CharacterState
 @export var wander: CharacterState
 @export var mines_template: PackedScene
 
-enum SUBSTATE {ANIMATING, DROP_NEEDED, DONE}
+@onready var sound: AudioStreamPlayer = $AudioStreamPlayer
+
+enum SUBSTATE {ANIMATING, DROP_NEEDED, WAIT_FOR_SOUND, DONE}
 
 var sub_state: SUBSTATE = SUBSTATE.ANIMATING
 var mines_left: int = 0
@@ -27,6 +29,8 @@ func mine_drop(zurg: Zurg):
 	get_tree().root.add_child(mine)
 	mine.global_position = zurg.get_node("MineSpawnPoint").global_position
 	mines_left -= 1
+	
+	sound.play()
 	
 	if mines_left == 0:
 		sub_state = SUBSTATE.DONE

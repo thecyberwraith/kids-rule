@@ -6,7 +6,11 @@ extends RigidBody3D
 @onready var particles: CPUParticles3D = $CPUParticles3D
 @onready var damage_area: Area3D = $DamageArea
 
+@onready var sound: AudioStreamPlayer = $AudioStreamPlayer
+
 var exploded: bool = false
+var things_done = 0
+var THINGS_WAIT_FOR = 2
 
 @export_range(1,5) var mine_damage: int = 1
 
@@ -29,6 +33,7 @@ func _ready():
 			exploded = true
 			particles.emitting = true
 			sprite.visible = false
+			sound.play()
 			
 			for other_body in damage_area.get_overlapping_bodies():
 				print("Checking ", other_body.name)
@@ -38,9 +43,15 @@ func _ready():
 					node.damage(mine_damage)
 		)
 	
-	particles.finished.connect(func(): queue_free(), CONNECT_ONE_SHOT)
+	particles.finished.connect(should_i_free, CONNECT_ONE_SHOT)
+	sound.finished.connect(should_i_free, CONNECT_ONE_SHOT)
 	
 	visibility_area.screen_exited.connect(func(): 
 		print("mine off-screen")
 		queue_free()
 	)
+
+func should_i_free():
+	things_done += 1
+	if things_done == THINGS_WAIT_FOR:
+		queue_free()

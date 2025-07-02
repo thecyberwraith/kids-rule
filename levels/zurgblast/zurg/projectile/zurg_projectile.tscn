@@ -8,13 +8,13 @@ albedo_color = Color(2, 1, 0.3, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_ctacl"]
 material = SubResource("StandardMaterial3D_124ju")
-radius = 0.1
-height = 0.2
+radius = 0.2
+height = 0.4
 radial_segments = 16
 rings = 16
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_124ju"]
-radius = 0.1
+radius = 0.245629
 
 [node name="ZurgProjectile" type="RigidBody3D"]
 collision_layer = 8

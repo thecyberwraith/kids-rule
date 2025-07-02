@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://b2xtu7ba2rsl6"]
+[gd_scene load_steps=54 format=3 uid="uid://b2xtu7ba2rsl6"]
 
 [ext_resource type="Script" uid="uid://wgujldfv764m" path="res://levels/zurgblast/player/ranger_player.gd" id="1_t5s3s"]
 [ext_resource type="PackedScene" uid="uid://ddtsjuq1v7xhd" path="res://levels/zurgblast/player/laser/laser_beam.tscn" id="2_6tx33"]
@@ -6,15 +6,23 @@
 [ext_resource type="Texture2D" uid="uid://bnwfbag8ounsm" path="res://levels/zurgblast/player/player_sprites.png" id="3_fuqmf"]
 [ext_resource type="Shader" uid="uid://b4g23qb6ele23" path="res://shaders/flash_color_2d.tres" id="3_wfjnu"]
 [ext_resource type="Script" uid="uid://neoh44hq0jbr" path="res://utility/DamageHandler.gd" id="4_fuqmf"]
-[ext_resource type="Script" uid="uid://bhhkefilgcye1" path="res://states/FallState.gd" id="4_ljv5u"]
 [ext_resource type="Script" uid="uid://b0uvg7paf1564" path="res://levels/zurgblast/player/laser/laser_launcher.gd" id="4_wfjnu"]
 [ext_resource type="Script" uid="uid://bfluc1wi7eboh" path="res://levels/zurgblast/player/ranger_state_machine.gd" id="5_iw5bf"]
+[ext_resource type="AudioStream" uid="uid://dmoknkt8tymq" path="res://levels/zurgblast/player/laser/laser5.mp3" id="6_vtdwa"]
+[ext_resource type="AudioStream" uid="uid://qadmhfxx7qsq" path="res://levels/zurgblast/player/laser/laser6.mp3" id="7_mvrvd"]
 [ext_resource type="Script" uid="uid://dlqutghrlrwjp" path="res://levels/zurgblast/player/ranger_state_idle.gd" id="8_6asnq"]
 [ext_resource type="Script" uid="uid://c40hscugldg0x" path="res://levels/zurgblast/player/ranger_state_walk.gd" id="8_6tx33"]
+[ext_resource type="AudioStream" uid="uid://6h1xt7nmmj44" path="res://levels/zurgblast/player/laser/laser7.mp3" id="8_qvlys"]
 [ext_resource type="Script" uid="uid://mlnadeg6idv0" path="res://levels/zurgblast/player/ranger_state_fire.gd" id="9_6asnq"]
+[ext_resource type="Script" uid="uid://b7q64s8h3lppk" path="res://levels/zurgblast/player/state_fall.gd" id="9_g0tfm"]
+[ext_resource type="AudioStream" uid="uid://cx4s3ih2uc3cn" path="res://levels/zurgblast/player/sounds/sfx_movement_jump14_landing.wav" id="10_g0tfm"]
+[ext_resource type="AudioStream" uid="uid://be5yae7bftshs" path="res://levels/zurgblast/player/sounds/sfx_movement_footstepsloop4_fast.wav" id="12_x8fx8"]
 [ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/CharacterResource.gd" id="13_ic2u0"]
 [ext_resource type="Script" uid="uid://ckjxtd37v7al7" path="res://levels/zurgblast/player/ranger_state_damage.gd" id="13_kdk1u"]
 [ext_resource type="Theme" uid="uid://bcuyjrsty3xqf" path="res://ui/generic_health_bar_style.theme" id="15_ojsgv"]
+[ext_resource type="AudioStream" uid="uid://djy0ealwux2op" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage1.wav" id="19_jf7c3"]
+[ext_resource type="AudioStream" uid="uid://bjyfsgdwrn4fg" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage2.wav" id="20_t366r"]
+[ext_resource type="AudioStream" uid="uid://cf1ghc3sotp8h" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage3.wav" id="21_kwu3j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_72rrw"]
 shader = ExtResource("3_wfjnu")
@@ -22,6 +30,13 @@ shader_parameter/mix_color = Color(1, 0, 0, 1)
 shader_parameter/ossilation_factor = 0.0
 shader_parameter/min_intensity = 0.0
 shader_parameter/max_intensity = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jf7c3"]
+random_volume_offset_db = 2.33
+streams_count = 3
+stream_0/stream = ExtResource("6_vtdwa")
+stream_1/stream = ExtResource("7_mvrvd")
+stream_2/stream = ExtResource("8_qvlys")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ic2u0"]
 viewport_path = NodePath("SubViewport")
@@ -403,7 +418,7 @@ _data = {
 &"walk": SubResource("Animation_g0tfm")
 }
 
-[sub_resource type="Resource" id="Resource_ic2u0"]
+[sub_resource type="Resource" id="Resource_jf7c3"]
 script = ExtResource("13_ic2u0")
 name = "HEALTH"
 min_value = 0.0
@@ -413,6 +428,14 @@ metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fuqmf"]
 height = 1.52781
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rnemh"]
+random_pitch = 1.38
+random_volume_offset_db = 2.0
+streams_count = 3
+stream_0/stream = ExtResource("19_jf7c3")
+stream_1/stream = ExtResource("20_t366r")
+stream_2/stream = ExtResource("21_kwu3j")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kdk1u"]
 shader = ExtResource("3_wfjnu")
@@ -569,6 +592,10 @@ script = ExtResource("4_wfjnu")
 laser_beam = ExtResource("2_6tx33")
 laser_beam_velocity = 8.0
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Visuals/LaserSpawn"]
+stream = SubResource("AudioStreamRandomizer_jf7c3")
+volume_db = 4.194
+
 [node name="ranger" type="Sprite3D" parent="Visuals"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222186, 0.796697, 0)
 pixel_size = 0.05
@@ -583,7 +610,7 @@ libraries = {
 
 [node name="DamageHandler" type="Node" parent="."]
 script = ExtResource("4_fuqmf")
-health = SubResource("Resource_ic2u0")
+health = SubResource("Resource_jf7c3")
 metadata/_custom_type_script = "uid://neoh44hq0jbr"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -599,11 +626,18 @@ state = NodePath("IdleState")
 metadata/_custom_type_script = "uid://dswy2oapviqwo"
 
 [node name="FallState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
-script = ExtResource("4_ljv5u")
+script = ExtResource("9_g0tfm")
 idle_state = NodePath("../IdleState")
-air_speed = 2.0
-fall_speed = 2.605
+air_speed = 4.0
+fall_speed = 5.0
 metadata/_custom_type_script = "uid://bhhkefilgcye1"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/FallState"]
+bus = &"Effects"
+
+[node name="AudioStreamPlayerEnd" type="AudioStreamPlayer" parent="StateMachine/FallState"]
+stream = ExtResource("10_g0tfm")
+bus = &"Effects"
 
 [node name="WalkState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "laser", "fall")]
 script = ExtResource("8_6tx33")
@@ -611,6 +645,10 @@ idle = NodePath("../IdleState")
 laser = NodePath("../FireState")
 fall = NodePath("../FallState")
 metadata/_custom_type_script = "uid://bj0qqyveye3xt"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/WalkState"]
+stream = ExtResource("12_x8fx8")
+bus = &"Effects"
 
 [node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("laser", "walk", "fall")]
 script = ExtResource("8_6asnq")
@@ -631,6 +669,9 @@ metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="Timer" type="Timer" parent="StateMachine/Damage"]
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/Damage"]
+stream = SubResource("AudioStreamRandomizer_rnemh")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true

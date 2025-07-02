@@ -17,8 +17,15 @@ func update_player_for_template(input: PlayerInput):
 	if spawn_ray.is_colliding():
 		player.global_position = spawn_ray.get_collision_point()
 	else:
-		player.global_position = spawn_ray.global_position
+		player.global_position = Vector3.ZERO
 
+	var player_order = player_map.keys()
+	player_order.sort()
+	
+	var index = player_order.find(input.to_string())
+	
+	player.global_position.z = (-1)**(index+1)*ceili(index / 2.0)
+	
 	player.add_to_group("rangers")
 
 
@@ -32,7 +39,7 @@ func prepare_unload():
 func _on_child_order_changed():
 	for handler in healths:
 		if handler.value_changed.is_connected(_on_node_health_change):
-			handler.health.value_changed.disconnect(_on_node_health_change)
+			handler.value_changed.disconnect(_on_node_health_change)
 	healths = _get_damage_handlers()
 	for handler in healths:
 		if not handler.value_changed.is_connected(_on_node_health_change):

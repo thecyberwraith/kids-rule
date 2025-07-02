@@ -1,6 +1,7 @@
 class_name DamageHandler extends Node
 
 @export var health := CharacterResource.new("Health", 0.0, 10.0, 10.0)
+@export var is_shared := false
 @export var invincible_duration: float = 1.5
 
 var invincible_time = 0.0
@@ -12,6 +13,13 @@ signal invincibility_stop
 signal death
 
 func _ready():
+	if !is_shared:
+		health = CharacterResource.new(
+			health.name,
+			health.min_value,
+			health.max_value,
+			health.value
+		)
 	health.value_changed.connect(_handle_new_health_value)
 
 func damage(amount: float):

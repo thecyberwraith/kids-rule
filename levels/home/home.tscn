@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dygbjwnjsndsg"]
+[gd_scene load_steps=20 format=3 uid="uid://dygbjwnjsndsg"]
 
 [ext_resource type="Script" uid="uid://b35qnfpxgfwu1" path="res://levels/home/home.gd" id="1_tno0q"]
 [ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://multi_views/SharedCamera.gd" id="3_ho2oo"]
@@ -6,10 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bkr3mjohaxrrn" path="res://ui/player_selection.tscn" id="4_dsat6"]
 [ext_resource type="Texture2D" uid="uid://cw6ot2fiv1rh6" path="res://levels/wreck_it/ralph/ralph.png" id="5_e5gns"]
 [ext_resource type="PackedScene" uid="uid://c2knxvd5re80w" path="res://levels/home/load_game_area.tscn" id="6_hb728"]
-[ext_resource type="PackedScene" uid="uid://d1t1buja4b2rb" path="res://levels/wreck_it/wreck_level.tscn" id="7_32qkc"]
 [ext_resource type="AudioStream" uid="uid://6mlpke8crd16" path="res://levels/home/audio/The-Life-and-Times-of-Inky-Blinky-Pinky-and-Clyde_Looping.mp3" id="8_pljee"]
 [ext_resource type="Texture2D" uid="uid://bnwfbag8ounsm" path="res://levels/zurgblast/player/player_sprites.png" id="9_tr1w2"]
-[ext_resource type="PackedScene" uid="uid://b1lrxtlhfo26j" path="res://levels/zurgblast/ZurgLevel.tscn" id="10_a2e86"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_god8x"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -43,6 +41,10 @@ albedo_color = Color(1.44392e-07, 0.585166, 0.258229, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eneiq"]
 albedo_color = Color(0.791564, 0, 0.11551, 1)
+
+[sub_resource type="Gradient" id="Gradient_pljee"]
+offsets = PackedFloat32Array(0, 0.785235)
+colors = PackedColorArray(2.11775e-06, 0.605216, 0.324913, 1, 0.911119, 0.0939803, 0.751844, 1)
 
 [node name="Home" type="Node3D"]
 script = ExtResource("1_tno0q")
@@ -118,7 +120,7 @@ region_enabled = true
 region_rect = Rect2(14.8213, 18.3159, 47.1787, 56.4295)
 
 [node name="LoadGameArea" parent="Ralph" instance=ExtResource("6_hb728")]
-scene = ExtResource("7_32qkc")
+scene = "res://levels/wreck_it/wreck_level.tscn"
 confirm_duration = 5.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -139,5 +141,6 @@ region_rect = Rect2(61, 0, 36, 34)
 
 [node name="LoadGameArea" parent="Ranger" instance=ExtResource("6_hb728")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.962646, 0)
-scene = ExtResource("10_a2e86")
+scene = "res://levels/zurgblast/ZurgLevel.tscn"
+color_gradient = SubResource("Gradient_pljee")
 confirm_duration = 3.0

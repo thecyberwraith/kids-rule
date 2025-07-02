@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://wit0fthjhfxp"]
+[gd_scene load_steps=63 format=3 uid="uid://wit0fthjhfxp"]
 
 [ext_resource type="Texture2D" uid="uid://dr38tiv3rk4li" path="res://levels/zurgblast/zurg/zurg.png" id="1_a8pmx"]
 [ext_resource type="Script" uid="uid://cokay3qud7gn1" path="res://levels/zurgblast/zurg/zurg.gd" id="1_dgcbe"]
@@ -11,15 +11,20 @@
 [ext_resource type="Script" uid="uid://bn3ny2jx53jdr" path="res://levels/zurgblast/zurg/states/zurg_state_machine.gd" id="8_erdk3"]
 [ext_resource type="Script" uid="uid://caqqveycr25eg" path="res://levels/zurgblast/zurg/states/damaged.gd" id="9_4vqep"]
 [ext_resource type="Script" uid="uid://0wb10fbxedyj" path="res://levels/zurgblast/zurg/states/wander.gd" id="9_erdk3"]
-[ext_resource type="Script" uid="uid://bsg73rmysondp" path="res://levels/zurgblast/zurg/zurg_state_attack.gd" id="10_4vqep"]
-[ext_resource type="Script" uid="uid://cq376p7fk3hvr" path="res://levels/zurgblast/zurg/zurg_state_volley.gd" id="11_v0u3p"]
+[ext_resource type="Script" uid="uid://bsg73rmysondp" path="res://levels/zurgblast/zurg/states/zurg_state_attack.gd" id="10_4vqep"]
+[ext_resource type="Script" uid="uid://cq376p7fk3hvr" path="res://levels/zurgblast/zurg/states/zurg_state_volley.gd" id="11_v0u3p"]
+[ext_resource type="AudioStream" uid="uid://bqkjutt5g7h47" path="res://levels/zurgblast/zurg/sounds/sfx_sound_shutdown1.wav" id="12_kn7a5"]
+[ext_resource type="AudioStream" uid="uid://bf2x4q182s4eg" path="res://levels/zurgblast/zurg/sounds/sfx_sound_shutdown2.wav" id="13_u8p8w"]
 [ext_resource type="Script" uid="uid://cf7hkigyfqad2" path="res://levels/zurgblast/zurg/mines.gd" id="14_h1o1f"]
+[ext_resource type="AudioStream" uid="uid://dutuj5xddbrgi" path="res://levels/zurgblast/zurg/sounds/sfx_weapon_singleshot1.wav" id="14_hloqa"]
 [ext_resource type="PackedScene" uid="uid://dlbyjymwfj72j" path="res://levels/zurgblast/mine/ZurgMine.tscn" id="15_eeqs6"]
+[ext_resource type="AudioStream" uid="uid://b50sngy40h2wb" path="res://levels/zurgblast/zurg/sounds/sfx_wpn_cannon4.wav" id="17_8t8i0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_all2i"]
 
 [sub_resource type="Animation" id="Animation_erdk3"]
 length = 0.001
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,6 +40,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_gnrcj"]
 resource_name = "spin"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -339,6 +345,19 @@ animations = [{
 [sub_resource type="ViewportTexture" id="ViewportTexture_e2acf"]
 viewport_path = NodePath("SubViewport")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qnj6g"]
+streams_count = 2
+stream_0/stream = ExtResource("12_kn7a5")
+stream_1/stream = ExtResource("13_u8p8w")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8t8i0"]
+streams_count = 1
+stream_0/stream = ExtResource("14_hloqa")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sgejs"]
+streams_count = 1
+stream_0/stream = ExtResource("17_8t8i0")
+
 [node name="Zurg" type="CharacterBody3D" node_paths=PackedStringArray("sprite")]
 collision_layer = 4
 collision_mask = 11
@@ -420,6 +439,9 @@ script = ExtResource("9_4vqep")
 wander = NodePath("../wander")
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GenericStateMachine/damaged"]
+stream = SubResource("AudioStreamRandomizer_qnj6g")
+
 [node name="attack" type="Node" parent="GenericStateMachine" node_paths=PackedStringArray("volley", "mines")]
 script = ExtResource("10_4vqep")
 volley = NodePath("volley")
@@ -434,10 +456,18 @@ metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 [node name="Timer" type="Timer" parent="GenericStateMachine/attack/volley"]
 wait_time = 0.3
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GenericStateMachine/attack/volley"]
+stream = SubResource("AudioStreamRandomizer_8t8i0")
+bus = &"Effects"
+
 [node name="mines" type="Node" parent="GenericStateMachine/attack" node_paths=PackedStringArray("wander")]
 script = ExtResource("14_h1o1f")
 wander = NodePath("../../wander")
 mines_template = ExtResource("15_eeqs6")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GenericStateMachine/attack/mines"]
+stream = SubResource("AudioStreamRandomizer_sgejs")
+bus = &"Effects"
 
 [node name="MineSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.233261, 0)

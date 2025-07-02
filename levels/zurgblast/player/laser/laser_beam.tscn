@@ -8,14 +8,14 @@ shading_mode = 0
 albedo_color = Color(8, 0.057, 0.033, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_7exgt"]
-top_radius = 0.02
-bottom_radius = 0.02
-height = 0.3
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.5
 radial_segments = 16
 rings = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ogsu"]
-size = Vector3(0.3, 0.002, 0.002)
+size = Vector3(0.502557, 0.002, 0.002)
 
 [node name="LaserBeam" type="RigidBody3D"]
 collision_layer = 8
@@ -29,6 +29,7 @@ material_override = SubResource("StandardMaterial3D_7exgt")
 mesh = SubResource("CylinderMesh_7exgt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000656158, 0, 0)
 shape = SubResource("BoxShape3D_0ogsu")
 
 [node name="Timer" type="Timer" parent="."]
