@@ -29,6 +29,10 @@ window/size/viewport_height=900
 
 enabled=PackedStringArray("res://addons/Souperior 2D Skeleton Modifications/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 key_1_left={

@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dr38tiv3rk4li" path="res://levels/zurgblast/zurg/zurg.png" id="1_a8pmx"]
 [ext_resource type="Script" uid="uid://cokay3qud7gn1" path="res://levels/zurgblast/zurg/zurg.gd" id="1_dgcbe"]
-[ext_resource type="PackedScene" uid="uid://6f6iid5hm5gx" path="res://levels/zurgblast/zurg/platform.blend" id="2_dgcbe"]
 [ext_resource type="Script" uid="uid://b1dffa6ukg1i6" path="res://levels/zurgblast/zurg/projectile/zurg_launcher.gd" id="3_nd5n5"]
 [ext_resource type="PackedScene" uid="uid://b18iljn106to4" path="res://levels/zurgblast/zurg/projectile/zurg_projectile.tscn" id="4_y3f7p"]
 [ext_resource type="Script" uid="uid://neoh44hq0jbr" path="res://utility/DamageHandler.gd" id="5_e2acf"]
@@ -19,46 +18,9 @@
 [ext_resource type="AudioStream" uid="uid://dutuj5xddbrgi" path="res://levels/zurgblast/zurg/sounds/sfx_weapon_singleshot1.wav" id="14_hloqa"]
 [ext_resource type="PackedScene" uid="uid://dlbyjymwfj72j" path="res://levels/zurgblast/mine/ZurgMine.tscn" id="15_eeqs6"]
 [ext_resource type="AudioStream" uid="uid://b50sngy40h2wb" path="res://levels/zurgblast/zurg/sounds/sfx_wpn_cannon4.wav" id="17_8t8i0"]
+[ext_resource type="PackedScene" uid="uid://djwe4fnj1x612" path="res://levels/zurgblast/zurg/platform.glb" id="19_kn7a5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_all2i"]
-
-[sub_resource type="Animation" id="Animation_erdk3"]
-length = 0.001
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_gnrcj"]
-resource_name = "spin"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4vqep"]
-_data = {
-&"RESET": SubResource("Animation_erdk3"),
-&"spin": SubResource("Animation_gnrcj")
-}
 
 [sub_resource type="Resource" id="Resource_v0u3p"]
 script = ExtResource("6_gnrcj")
@@ -358,6 +320,43 @@ stream_0/stream = ExtResource("14_hloqa")
 streams_count = 1
 stream_0/stream = ExtResource("17_8t8i0")
 
+[sub_resource type="Animation" id="Animation_u8p8w"]
+resource_name = "default"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qnj6g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bsruj"]
+_data = {
+&"RESET": SubResource("Animation_qnj6g"),
+&"default": SubResource("Animation_u8p8w")
+}
+
 [node name="Zurg" type="CharacterBody3D" node_paths=PackedStringArray("sprite")]
 collision_layer = 4
 collision_mask = 11
@@ -367,15 +366,6 @@ sprite = NodePath("SubViewport/AnimatedSprite2D")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50374, 0)
 shape = SubResource("CapsuleShape3D_all2i")
-
-[node name="platform" parent="." instance=ExtResource("2_dgcbe")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254035, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="platform"]
-libraries = {
-&"": SubResource("AnimationLibrary_4vqep")
-}
-autoplay = "spin"
 
 [node name="LaunchRays" type="Node3D" parent="." node_paths=PackedStringArray("sprite")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505503, 0)
@@ -471,3 +461,11 @@ bus = &"Effects"
 
 [node name="MineSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.233261, 0)
+
+[node name="platform" parent="." instance=ExtResource("19_kn7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.272615, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="platform"]
+libraries = {
+&"": SubResource("AnimationLibrary_bsruj")
+}
