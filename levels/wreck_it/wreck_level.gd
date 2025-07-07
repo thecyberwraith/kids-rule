@@ -3,7 +3,7 @@ extends Node3D
 @onready var ralph: Ralph = $Ralph
 @onready var crate_container: Node3D = $Crates
 @onready var players: PlayerManager = $Players
-@onready var player_selection: PlayerSelection = $CanvasLayer/PlayerSelection
+@onready var pause: PauseMenu = $CanvasLayer/PauseMenu
 @onready var camera: SharedCamera = $SharedCamera
 @onready var ui: RalphUI = $CanvasLayer/RalphUI
 
@@ -16,9 +16,11 @@ var destruction_level: int = 0
 signal destruction_level_changed(float)
 
 func _ready():
+	pause.game_resumed.connect(players.on_game_resume)
+	
 	ralph.crate_targets = crate_container
 	ralph.game_over.connect(_on_game_over)
-
+	
 	for crate in crate_container.get_children():
 		crate.on_damage_change.connect(_on_crate_damage_change)
 

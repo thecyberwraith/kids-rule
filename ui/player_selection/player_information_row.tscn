@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dhoityi1x8og6"]
 
-[ext_resource type="Script" uid="uid://chfgge5i3gf31" path="res://ui/player_information_row.gd" id="1_04pib"]
+[ext_resource type="Script" uid="uid://chfgge5i3gf31" path="res://ui/player_selection/player_information_row.gd" id="1_04pib"]
 
 [node name="PlayerInformationRow" type="Control"]
 layout_mode = 3

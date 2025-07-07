@@ -5,8 +5,12 @@ extends Node3D
 @onready var players = $Players
 @onready var zurg_bar: ProgressBar = $CanvasLayer/ZurgHealth/ProgressBar
 @onready var overlay: TextOverlayPanel = $CanvasLayer/Overlay
+@onready var pause: PauseMenu = $CanvasLayer/PauseMenu
+
 
 func _ready():
+	pause.game_resumed.connect(players.on_game_resume)
+	
 	zurg.damage.death.connect(game_won)
 	zurg.damage.health.value_changed.connect(update_zurg_health)
 

@@ -5,14 +5,9 @@ extends PlayerManager
 
 signal all_health_drained
 
-func create_player(input: PlayerInput):
-	super.create_player_for_input(input)
-	var player := player_map[input.to_string()] as Player
-	player.on_created_by_manager()
-
 func update_player_for_template(input: PlayerInput):
 	var player := player_map[input.to_string()] as RangerPlayer
-	player.character = ActiveInputs.preferences.get_for(input).character
+	player.character = PlayerInputs.get_prefs_for(input).character
 	player.input = input
 	if spawn_ray.is_colliding():
 		player.global_position = spawn_ray.get_collision_point()
@@ -30,7 +25,9 @@ func update_player_for_template(input: PlayerInput):
 
 
 var healths: Array[CharacterResource] = []
+
 func _ready():
+	super._ready()
 	child_order_changed.connect(_on_child_order_changed)
 
 func prepare_unload():

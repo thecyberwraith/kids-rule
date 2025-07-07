@@ -1,5 +1,8 @@
 class_name PlayerInput
 extends Resource
+## Allows dyamic allocation of multiple controllers by decentralizing input
+## logic. Registration of individual inputs is handled by the [PlayerInputs]
+## class.
 
 var accept_name := "accept"
 var cancel_name := "cancel"

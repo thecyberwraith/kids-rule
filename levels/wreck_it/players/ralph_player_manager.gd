@@ -11,7 +11,7 @@ func create_player(input: PlayerInput):
 	var player := player_map[input.to_string()] as Player
 	
 	player.global_position = spawn_locations.get_child(
-		ActiveInputs.active_inputs.find(input)
+		PlayerInputs.active_inputs.find(input)
 	).global_position
 
 func update_player_for_level_details(input: PlayerInput):

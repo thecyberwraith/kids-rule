@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://otc3xr3f87nn"]
+
+[ext_resource type="PackedScene" uid="uid://c67v3xbhi2yo5" path="res://ui/pause/pause_menu.tscn" id="1_ocgdw"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseMenu" parent="." instance=ExtResource("1_ocgdw")]
+layout_mode = 1
+include_resume = false

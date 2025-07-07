@@ -6,6 +6,23 @@ class_name PlayerManager
 ## Maps a PlayerInput string to a player instance
 var player_map: Dictionary[String, Node]
 
+func _ready():
+	print("Creating players based on current active inputs.")
+	for input in PlayerInputs.active:
+		create_player_for_input(input)
+		
+		var prefs := PlayerInputs.get_prefs_for(input)
+		if prefs.character == null:
+			continue
+		
+		on_player_details_updated(input)
+
+
+func on_game_resume():
+	for input in PlayerInputs.active:
+		on_player_details_updated(input)
+
+
 ## Called anytime that the player's details, whether level specific or not, have
 ## changed.
 func on_player_details_updated(input: PlayerInput):
@@ -16,10 +33,11 @@ func on_player_details_updated(input: PlayerInput):
 	update_player_for_level_details(input)
 
 ## Called when the player's template parameters have changed. By default, this
-## instantiates the appropriate player visuals on a Player class.
+## instantiates the appropriate player visuals on a Player class. If the
+## PlayerTemplate is not a Player subclass, this method must be overridden.
 func update_player_for_template(input: PlayerInput):
 	var player := player_map[input.to_string()] as Player
-	var character := ActiveInputs.preferences.get_for(input).character
+	var character := PlayerInputs.get_prefs_for(input).character
 	
 	player.visuals = load(character.path).instantiate()
 	player.input = input
@@ -32,7 +50,7 @@ func handle_removing_old_players():
 	var keys_to_delete: Array[String] = []
 	
 	var joined_keys: Array[String] = []
-	for controller in ActiveInputs.active_inputs:
+	for controller in PlayerInputs.active_inputs:
 		joined_keys.append(controller.to_string())
 	
 	for input in player_map.keys():

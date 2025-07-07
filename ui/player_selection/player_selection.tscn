@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkr3mjohaxrrn"]
+
+[ext_resource type="Script" uid="uid://7nop6m20rq5g" path="res://ui/player_selection/player_selection.gd" id="1_4h2kx"]
+
+[node name="PlayerSelection" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("1_4h2kx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+process_mode = 2
+layout_mode = 2

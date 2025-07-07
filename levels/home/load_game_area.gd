@@ -38,3 +38,4 @@ func _check_player_count(_body):
 	particles.emitting = player_count > 0
 	var players := get_tree().get_node_count_in_group("players")
 	everyone_is_here = (players > 0) and (player_count >= players)
+	print("There are %s/%s players ready for %s" % [player_count, players, scene])

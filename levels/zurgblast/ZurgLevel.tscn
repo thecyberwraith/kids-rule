@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://wit0fthjhfxp" path="res://levels/zurgblast/zurg/zurg.tscn" id="1_0onmx"]
 [ext_resource type="Script" uid="uid://c8jne24r5n46n" path="res://levels/zurgblast/zurg_level.gd" id="1_we5ad"]
-[ext_resource type="PackedScene" uid="uid://bkr3mjohaxrrn" path="res://ui/player_selection.tscn" id="2_4xxc5"]
 [ext_resource type="Theme" uid="uid://bcuyjrsty3xqf" path="res://ui/generic_health_bar_style.theme" id="3_rylj8"]
 [ext_resource type="PackedScene" uid="uid://dw4j174xxubhl" path="res://ui/overlay.tscn" id="4_84p6i"]
-[ext_resource type="Script" uid="uid://cqnh3l5ys3jgh" path="res://levels/zurgblast/player/player_manager.gd" id="4_gkxna"]
+[ext_resource type="Script" uid="uid://cqnh3l5ys3jgh" path="res://levels/zurgblast/player/zurg_player_manager.gd" id="4_gkxna"]
+[ext_resource type="PackedScene" uid="uid://c67v3xbhi2yo5" path="res://ui/pause/pause_menu.tscn" id="4_lhjra"]
 [ext_resource type="Script" uid="uid://bk8xw6pdf4ykx" path="res://levels/zurgblast/player/player.gd" id="5_coj0v"]
 [ext_resource type="PackedScene" uid="uid://b2xtu7ba2rsl6" path="res://levels/zurgblast/player/RangerPlayer.tscn" id="7_hol4j"]
 [ext_resource type="Script" uid="uid://d0tkmyn62tdiv" path="res://levels/zurgblast/scrollables/scroller_spawner.gd" id="7_pcmxl"]
@@ -47,9 +47,6 @@ script = ExtResource("1_we5ad")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PlayerSelection" parent="CanvasLayer" node_paths=PackedStringArray("player_manager") instance=ExtResource("2_4xxc5")]
-player_manager = NodePath("../../Players")
-
 [node name="ZurgHealth" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 11
 anchor_left = 1.0
@@ -70,6 +67,9 @@ fill_mode = 3
 show_percentage = false
 
 [node name="Overlay" parent="CanvasLayer" instance=ExtResource("4_84p6i")]
+visible = false
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_lhjra")]
 visible = false
 
 [node name="World" type="Node3D" parent="."]
