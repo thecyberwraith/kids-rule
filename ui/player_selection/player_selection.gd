@@ -85,4 +85,15 @@ func detect_close_dialog_request():
 				info.extra[game_info_key] = row.get_game_info()
 			PlayerInputs.set_prefs_for(row.input, info)
 		set_process(false)
+		
+		var pausing_input = pause_menu.pausing_input
+		
+		if (pausing_input == null
+			or 
+			not pausing_input.to_string() in PlayerInputs.active.map(func(x): return x.to_string())
+			):
+			pausing_input = container.get_child(0).input
+		
+		pause_menu.pausing_input = pausing_input
+		
 		return_focus()

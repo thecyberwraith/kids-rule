@@ -5,6 +5,7 @@ extends Control
 
 @onready var tabs: TabContainer = $PanelContainer/MarginContainer/HBoxContainer/TabContainer
 @onready var buttons: VBoxContainer = $PanelContainer/MarginContainer/HBoxContainer/VBoxContainer
+@onready var input_label: Label = $PanelContainer/MarginContainer/Label
 
 @export var include_resume: bool = true
 @export var include_home: bool = true
@@ -13,7 +14,16 @@ extends Control
 
 signal game_resumed
 
-var pausing_input: PlayerInput = null
+var pausing_input: PlayerInput = null:
+	set(value):
+		pausing_input = value
+		
+		if pausing_input != null:
+			input_label.text = "Paused by %s" % pausing_input.to_string()
+			pausing_input.attach_to_ui()
+		else:
+			input_label.text = ""
+
 var tabs_insertion_index = 1
 var before_quit_index = -2
 
@@ -39,6 +49,14 @@ func _ready():
 		tabs.move_child(tab, before_quit_index)
 
 	_create_buttons()
+	_check_for_emtpy_inputs()
+
+	PlayerInputs.input_disconnected.connect(_check_for_emtpy_inputs)
+
+
+func _check_for_emtpy_inputs():
+	if PlayerInputs.active.size() == 0:
+		switch_to_player_panel()
 
 
 func _create_buttons():
@@ -71,6 +89,7 @@ func _select_panel(panel: int):
 		get_tree().paused = false
 		get_tree().change_scene_to_file("res://levels/home/home.tscn")
 	elif panel_name == "Quit":
+		print("Quitting game from the menu.")
 		get_tree().quit()
 	else:
 		var pause_panel: PauseMenuPanel = tabs.get_child(panel)
@@ -81,19 +100,23 @@ func _select_panel(panel: int):
 
 func switch_to_player_panel():
 	print("Performing switch to player panel.")
-	get_tree().paused = true
+	pause(null)
 	_select_panel(tabs.get_node("Players").get_index())
 
 
 func pause(input: PlayerInput):
 	get_tree().paused = true
+	visible = true
 	pausing_input = input
 	print("Pausing scene by ", input)
+	print("Giving focus to button ", buttons.get_child(0).text)
 	buttons.get_child(0).grab_focus()
 
 
 func unpause():
+	print("Unpausing the menu.")
 	get_tree().paused = false
+	visible = false
 	pausing_input = null
 	game_resumed.emit()
 
@@ -101,18 +124,9 @@ func unpause():
 func _process(_delta):
 	if not get_tree():
 		return
-
-	visible = get_tree().paused
 	
-	if get_tree().paused:
-		return
-	
-	if PlayerInputs.active.is_empty():
-		print("Switching to player panel due to no players.")
-		switch_to_player_panel()
-		return
-	
-	detect_pause_request()
+	if not get_tree().paused:
+		detect_pause_request()
 
 
 func detect_pause_request():
