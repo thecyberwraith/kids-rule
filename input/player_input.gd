@@ -4,6 +4,15 @@ extends Resource
 ## logic. Registration of individual inputs is handled by the [PlayerInputs]
 ## class.
 
+const UI_ACTIONS = [
+		["accept_name", "ui_accept"],
+		["cancel_name", "ui_cancel"],
+		["left_name", "ui_left"],
+		["right_name", "ui_right"],
+		["up_name", "ui_up"],
+		["down_name", "ui_down"],
+]
+
 var accept_name := "accept"
 var cancel_name := "cancel"
 var menu_name := "menu"
@@ -82,17 +91,17 @@ func equals(other: PlayerInput) -> bool:
 ## - ui_down
 ## By default, the named actions of the class are copied over to the ui actions
 func attach_to_ui():
-	var from_to_array = [
-		[accept_name, "ui_accept"],
-		[cancel_name, "ui_cancel"],
-		[left_name, "ui_left"],
-		[right_name, "ui_right"],
-		[up_name, "ui_up"],
-		[down_name, "ui_down"],
-	]
+	print("Attaching input %s to the UI" % self)
 	
-	for from_to in from_to_array:
-		_copy_action_events(from_to[0], from_to[1])
+	for from_to in UI_ACTIONS:
+		var from = self[from_to[0]]
+		_copy_action_events(from, from_to[1])
+
+
+static func clear_ui_attachments():
+	print("Detaching all input from UI")
+	for actions in UI_ACTIONS:
+		InputMap.action_erase_events(actions[1])
 
 
 ## Replaces events in the `to` action with those of the `from` action.
