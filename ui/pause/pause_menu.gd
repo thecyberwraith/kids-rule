@@ -76,7 +76,8 @@ func _create_buttons():
 			button.focus_neighbor_left = button.focus_previous
 			button.pressed.connect(func(): _select_panel(button_idx))
 			button.focus_entered.connect(func(): tabs.current_tab = button_idx)
-		buttons.get_child(0).grab_focus()
+		print("Giving focus to button on new menu ", buttons.get_child(0).text)
+		buttons.get_child(0).call_deferred("grab_focus")
 
 
 func _select_panel(panel: int):
@@ -92,10 +93,11 @@ func _select_panel(panel: int):
 		print("Quitting game from the menu.")
 		get_tree().quit()
 	else:
+		print("Selecting generic panel.")
 		var pause_panel: PauseMenuPanel = tabs.get_child(panel)
 		pause_panel.previous_focus = buttons.get_child(panel)
 		pause_panel.pause_menu = self
-		pause_panel.grab_focus()
+		pause_panel.call_deferred("grab_focus")
 
 
 func switch_to_player_panel():
@@ -110,7 +112,7 @@ func pause(input: PlayerInput):
 	pausing_input = input
 	print("Pausing scene by ", input)
 	print("Giving focus to button ", buttons.get_child(0).text)
-	buttons.get_child(0).grab_focus()
+	buttons.get_child(0).call_deferred("grab_focus")
 
 
 func unpause():

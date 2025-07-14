@@ -16,20 +16,24 @@ func _ready():
 	focus_entered.connect(func ():
 		print("Enabling player selection.")
 		PlayerInput.clear_ui_attachments()
-		_set_all_process(true)
+		_set_all_process(true),
+		CONNECT_DEFERRED
 	)
 	
 	focus_exited.connect(func ():
 		print("Disabling player selection.")
 		if pause_menu and pause_menu.pausing_input:
 			pause_menu.pausing_input.attach_to_ui()
-		_set_all_process(false)
+		_set_all_process(false),
+		CONNECT_DEFERRED
 	)
-	
-	_set_all_process(false)
 	
 	PlayerInputs.input_activated.connect(_add_child_row)
 	PlayerInputs.input_deactivated.connect(_remove_child_row)
+	
+	print("Starting off with a disabled selection panel.")
+	_set_all_process(false)
+
 
 
 func _set_all_process(val: bool):
