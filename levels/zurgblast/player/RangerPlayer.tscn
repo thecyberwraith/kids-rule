@@ -438,6 +438,7 @@ stream_1/stream = ExtResource("20_t366r")
 stream_2/stream = ExtResource("21_kwu3j")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kdk1u"]
+resource_local_to_scene = true
 shader = ExtResource("3_wfjnu")
 shader_parameter/mix_color = Color(0, 0.741813, 0.917863, 1)
 shader_parameter/ossilation_factor = 0.0
