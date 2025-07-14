@@ -6,7 +6,7 @@ class_name JoystickInput extends PlayerInput
 func _init(_index: int=0):
 	index = _index
 
-	_create_action_names("joystick_%s")
+	_create_action_names("joystick_%s" % index)
 	
 	var button_mappings = [
 		[accept_name, JOY_BUTTON_A],
