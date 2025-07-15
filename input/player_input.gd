@@ -25,7 +25,9 @@ var down_name := "down"
 func _create_action_names(prefix := "action"):
 	accept_name = "%s_accept" % prefix
 	cancel_name = "%s_cancel" % prefix
+	
 	menu_name = "%s_menu" % prefix
+	
 	left_name = "%s_left" % prefix
 	right_name = "%s_right" % prefix
 	up_name = "%s_up" % prefix
@@ -61,7 +63,7 @@ func get_vertical() -> float:
 	return Input.get_axis(down_name, up_name)
 
 func get_move_direction() -> Vector2:
-	return Vector2(get_horizontal(), -get_vertical()).normalized()
+	return Vector2(get_horizontal(), -get_vertical()).limit_length()
 
 func get_xz_direction() -> Vector3:
 	var vec_2d := get_move_direction()
