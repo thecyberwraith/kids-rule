@@ -26,8 +26,8 @@
 script = ExtResource("6_gnrcj")
 name = "HEALTH"
 min_value = 0.0
-max_value = 2.0
-value = 2.0
+max_value = 10.0
+value = 10.0
 metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gnrcj"]
@@ -320,6 +320,21 @@ stream_0/stream = ExtResource("14_hloqa")
 streams_count = 1
 stream_0/stream = ExtResource("17_8t8i0")
 
+[sub_resource type="Animation" id="Animation_qnj6g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_u8p8w"]
 resource_name = "default"
 length = 2.0
@@ -336,32 +351,18 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_qnj6g"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bsruj"]
 _data = {
 &"RESET": SubResource("Animation_qnj6g"),
 &"default": SubResource("Animation_u8p8w")
 }
 
-[node name="Zurg" type="CharacterBody3D" node_paths=PackedStringArray("sprite")]
+[node name="Zurg" type="AnimatableBody3D" node_paths=PackedStringArray("sprite")]
 collision_layer = 4
-collision_mask = 11
+collision_mask = 10
 script = ExtResource("1_dgcbe")
 sprite = NodePath("SubViewport/AnimatedSprite2D")
+metadata/_custom_type_script = "uid://bqdw0bf4nos3e"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50374, 0)
@@ -469,3 +470,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.272615, 0)
 libraries = {
 &"": SubResource("AnimationLibrary_bsruj")
 }
+autoplay = "default"

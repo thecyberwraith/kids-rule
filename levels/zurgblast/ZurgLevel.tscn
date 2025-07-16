@@ -100,7 +100,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 shape = SubResource("WorldBoundaryShape3D_pcmxl")
 
 [node name="Zurg" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_0onmx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.37433, 1.94013, 4.0132)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.37433, 1.94013, 0.503078)
+sync_to_physics = false
 camera = NodePath("../Camera3D")
 
 [node name="Players" type="Node3D" parent="." node_paths=PackedStringArray("spawn_ray")]

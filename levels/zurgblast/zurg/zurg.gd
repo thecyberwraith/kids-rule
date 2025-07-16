@@ -1,4 +1,4 @@
-class_name Zurg extends ScrollingCharacter
+class_name Zurg extends ScrollingAnimatableBody
 
 @export var sprite: AnimatedSprite2D
 

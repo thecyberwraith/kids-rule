@@ -16,6 +16,9 @@ func _process(delta):
 	if next_state != null:
 		transition_to_state(next_state)
 
+
+## Properly transitions from one state to the next by calling on_exit_state on
+## the previous state, and on_enter_state for the new state.
 func transition_to_state(new_state: CharacterState):
 	if state != null:
 		state.on_exit_state(_get_data())
