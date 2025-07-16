@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://b2xtu7ba2rsl6"]
+[gd_scene load_steps=57 format=3 uid="uid://b2xtu7ba2rsl6"]
 
 [ext_resource type="Script" uid="uid://wgujldfv764m" path="res://levels/zurgblast/player/ranger_player.gd" id="1_t5s3s"]
 [ext_resource type="PackedScene" uid="uid://ddtsjuq1v7xhd" path="res://levels/zurgblast/player/laser/laser_beam.tscn" id="2_6tx33"]
@@ -23,6 +23,7 @@
 [ext_resource type="AudioStream" uid="uid://djy0ealwux2op" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage1.wav" id="19_jf7c3"]
 [ext_resource type="AudioStream" uid="uid://bjyfsgdwrn4fg" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage2.wav" id="20_t366r"]
 [ext_resource type="AudioStream" uid="uid://cf1ghc3sotp8h" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage3.wav" id="21_kwu3j"]
+[ext_resource type="Script" uid="uid://cfhe4hvwyuyvf" path="res://levels/zurgblast/player/ranger_state_defeated.gd" id="22_t366r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_72rrw"]
 shader = ExtResource("3_wfjnu")
@@ -143,6 +144,45 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_t366r"]
+resource_name = "defeat"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.507658, 0.385445, -0.01)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/head:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 1.65049)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/AnimatedSprite2D:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"defeat"]
 }
 
 [sub_resource type="Animation" id="Animation_ljv5u"]
@@ -411,6 +451,7 @@ tracks/3/keys = {
 _data = {
 &"RESET": SubResource("Animation_rq8gb"),
 &"damaged": SubResource("Animation_kdk1u"),
+&"defeat": SubResource("Animation_t366r"),
 &"fall": SubResource("Animation_ljv5u"),
 &"idle": SubResource("Animation_ojsgv"),
 &"interact": SubResource("Animation_fuqmf"),
@@ -419,6 +460,7 @@ _data = {
 }
 
 [sub_resource type="Resource" id="Resource_jf7c3"]
+resource_local_to_scene = true
 script = ExtResource("13_ic2u0")
 name = "HEALTH"
 min_value = 0.0
@@ -460,6 +502,10 @@ region = Rect2(64, 32, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_g0tfm"]
 atlas = ExtResource("3_fuqmf")
 region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwu3j"]
+atlas = ExtResource("3_fuqmf")
+region = Rect2(64, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kdk1u"]
 atlas = ExtResource("3_fuqmf")
@@ -520,6 +566,14 @@ animations = [{
 "loop": true,
 "name": &"damaged",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwu3j")
+}],
+"loop": true,
+"name": &"defeat",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -663,9 +717,10 @@ script = ExtResource("9_6asnq")
 idle = NodePath("../IdleState")
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
-[node name="Damage" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle")]
+[node name="Damage" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "defeat")]
 script = ExtResource("13_kdk1u")
 idle = NodePath("../IdleState")
+defeat = NodePath("../Defeated")
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="Timer" type="Timer" parent="StateMachine/Damage"]
@@ -673,6 +728,10 @@ one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/Damage"]
 stream = SubResource("AudioStreamRandomizer_rnemh")
+
+[node name="Defeated" type="Node" parent="StateMachine"]
+script = ExtResource("22_t366r")
+metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
