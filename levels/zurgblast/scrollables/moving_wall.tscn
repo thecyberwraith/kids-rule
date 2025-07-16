@@ -6,10 +6,10 @@
 albedo_color = Color(0.0276552, 0.114567, 0.204926, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b57n"]
-size = Vector3(1, 4, 9.58441)
+size = Vector3(1.4383, 4, 9.58441)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aej7y"]
-size = Vector3(1.38031, 4, 9.92355)
+size = Vector3(1.62167, 4, 9.92355)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_aej7y"]
 top_radius = 0.0
@@ -20,10 +20,12 @@ rings = 1
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0b57n"]
 albedo_color = Color(0.189943, 0.281298, 0.328536, 1)
 
-[node name="MovingWall" type="CharacterBody3D"]
-collision_layer = 0
-collision_mask = 0
+[node name="MovingWall" type="AnimatableBody3D"]
+disable_mode = 2
+collision_mask = 2
+sync_to_physics = false
 script = ExtResource("1_aej7y")
+metadata/_custom_type_script = "uid://bqdw0bf4nos3e"
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -31,15 +33,16 @@ size = Vector3(1, 4, 9.5)
 material = SubResource("StandardMaterial3D_aej7y")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00361, -0.00814819)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.219146, 2.00361, -0.00814819)
 shape = SubResource("BoxShape3D_0b57n")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.190155, 2.00361, 0.0706024)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.310837, 2.00361, 0.0706024)
 shape = SubResource("BoxShape3D_aej7y")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]

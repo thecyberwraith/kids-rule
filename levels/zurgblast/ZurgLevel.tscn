@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b1lrxtlhfo26j"]
+[gd_scene load_steps=24 format=3 uid="uid://b1lrxtlhfo26j"]
 
 [ext_resource type="PackedScene" uid="uid://wit0fthjhfxp" path="res://levels/zurgblast/zurg/zurg.tscn" id="1_0onmx"]
 [ext_resource type="Script" uid="uid://c8jne24r5n46n" path="res://levels/zurgblast/zurg_level.gd" id="1_we5ad"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://ci0ad734ni3k2" path="res://levels/zurgblast/scrollables/Fence.tscn" id="9_coj0v"]
 [ext_resource type="PackedScene" uid="uid://bisruuwu613kr" path="res://levels/zurgblast/scrollables/moving_wall.tscn" id="9_cwp6v"]
 [ext_resource type="Script" uid="uid://buqy0vcxby3ch" path="res://utility/scrolling/scrolling_camera.gd" id="9_pcmxl"]
+[ext_resource type="Script" uid="uid://bqdw0bf4nos3e" path="res://utility/scrolling/scrolling_animated_body.gd" id="15_jnx7f"]
 [ext_resource type="AudioStream" uid="uid://dqmg2nhafh8o" path="res://levels/zurgblast/Orbital Colossus.mp3" id="15_lhjra"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rsr1o"]
@@ -41,6 +42,9 @@ plane = Plane(0, 0, -1, 0)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0onmx"]
 albedo_color = Color(0.260872, 0.248533, 0.251657, 1)
 metallic = 0.2
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_84p6i"]
+plane = Plane(-1, 0, 0, 0)
 
 [node name="ZurgLevel" type="Node3D"]
 script = ExtResource("1_we5ad")
@@ -256,3 +260,14 @@ stream = ExtResource("15_lhjra")
 volume_db = -8.0
 autoplay = true
 bus = &"BG Music"
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="." node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.60236, 0, 0)
+collision_mask = 2
+constant_linear_velocity = Vector3(50, 0, 0)
+sync_to_physics = false
+script = ExtResource("15_jnx7f")
+camera = NodePath("../Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
+shape = SubResource("WorldBoundaryShape3D_84p6i")
