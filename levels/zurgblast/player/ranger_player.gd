@@ -16,6 +16,9 @@ var input : PlayerInput = PlayerInput.new()
 			head.texture = texture
 
 @onready var launcher = $Visuals/LaserSpawn
+@onready var shader: ShaderMaterial:
+	get:
+		return get_node("SubViewport/AnimatedSprite2D").material
 
 func _ready():
 	damage.damaged.connect(
