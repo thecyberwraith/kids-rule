@@ -5,7 +5,7 @@ class_name RangerPlayer extends CharacterBody3D
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var head: Sprite3D = $Visuals/head
 
-var input : PlayerInput = PlayerInput.new()
+@export var input : PlayerInput = PlayerInput.new()
 
 @onready var visuals : Node3D = $Visuals
 @onready var character: CharacterInfo:
@@ -32,6 +32,7 @@ func _ready():
 	
 	health_bar.value = damage.health.value
 	health_bar.max_value = damage.health.max_value
+
 
 func fire_laser():
 	launcher.fire(1)
