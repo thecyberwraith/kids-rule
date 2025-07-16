@@ -1,4 +1,4 @@
-extends CharacterState
+extends AnimatedState
 
 @export var idle: CharacterState
 @export var laser: CharacterState
@@ -9,7 +9,7 @@ extends CharacterState
 @onready var sound: AudioStreamPlayer = $AudioStreamPlayer
 
 func on_enter_state(data: StateMachine.Dependencies):
-	data.animations.play("walk")
+	super.on_enter_state(data)
 	sound.play()
 
 func on_exit_state(_data):

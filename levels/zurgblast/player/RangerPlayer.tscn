@@ -699,6 +699,8 @@ script = ExtResource("8_6tx33")
 idle = NodePath("../IdleState")
 laser = NodePath("../FireState")
 fall = NodePath("../FallState")
+animation = "walk"
+animation_property = &"animations"
 metadata/_custom_type_script = "uid://bj0qqyveye3xt"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StateMachine/WalkState"]
@@ -715,12 +717,16 @@ metadata/_custom_type_script = "uid://dlvbphqlqk6x3"
 [node name="FireState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle")]
 script = ExtResource("9_6asnq")
 idle = NodePath("../IdleState")
+animation = "laser"
+animation_property = &"animations"
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="Damage" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "defeat")]
 script = ExtResource("13_kdk1u")
 idle = NodePath("../IdleState")
 defeat = NodePath("../Defeated")
+animation = "damaged"
+animation_property = &"animations"
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="Timer" type="Timer" parent="StateMachine/Damage"]
@@ -731,6 +737,8 @@ stream = SubResource("AudioStreamRandomizer_rnemh")
 
 [node name="Defeated" type="Node" parent="StateMachine"]
 script = ExtResource("22_t366r")
+animation = "defeat"
+animation_property = &"animations"
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="SubViewport" type="SubViewport" parent="."]

@@ -1,4 +1,4 @@
-extends CharacterState
+extends AnimatedState
 
 @export var idle: CharacterState
 @export var defeat: CharacterState
@@ -18,6 +18,7 @@ func set_shader_parameters(data, values):
 
 
 func on_enter_state(data: StateMachine.Dependencies):
+	super.on_enter_state(data)
 	next_state = null
 	sound.play()
 	set_shader_parameters(data, [16, 0.4])
@@ -36,8 +37,10 @@ func on_enter_state(data: StateMachine.Dependencies):
 		set_shader_parameters(data, [0, 0.0]),
 		CONNECT_ONE_SHOT
 	)
-	ranger.animation.play("damaged")
 
 
-func process(_dt, _data):
+func process(_dt, data: StateMachine.Dependencies):
+	data.character.velocity = Vector3.ZERO
+	data.character.move_and_slide()
+
 	return next_state

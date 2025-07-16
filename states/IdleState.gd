@@ -16,4 +16,7 @@ func process(_delta: float, data: StateMachine.Dependencies) -> CharacterState:
 	if direction != Vector2.ZERO:
 		return walk
 
+	data.character.velocity = Vector3.ZERO
+	data.character.move_and_slide()
+	
 	return null
