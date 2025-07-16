@@ -36,9 +36,7 @@ func _ready():
 			sound.play()
 			
 			for other_body in damage_area.get_overlapping_bodies():
-				print("Checking ", other_body.name)
 				if other_body.is_in_group("rangers"):
-					print("Damaging?...")
 					var node: DamageHandler = other_body.get_node("DamageHandler") as DamageHandler
 					node.damage(mine_damage)
 		)
@@ -47,7 +45,7 @@ func _ready():
 	sound.finished.connect(should_i_free, CONNECT_ONE_SHOT)
 	
 	visibility_area.screen_exited.connect(func(): 
-		print("mine off-screen")
+		print("Mine off-screen")
 		queue_free()
 	)
 

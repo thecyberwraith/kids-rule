@@ -106,7 +106,9 @@ script = ExtResource("1_8233u")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ror5x")
-frame_progress = 0.488134
+autoplay = "default"
+frame = 6
+frame_progress = 0.219729
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_3tkg0")
@@ -129,6 +131,7 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 lifetime_randomness = 0.38
+local_coords = true
 mesh = SubResource("BoxMesh_3tkg0")
 emission_shape = 1
 emission_sphere_radius = 0.5
