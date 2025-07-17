@@ -14,14 +14,27 @@ signal healed(amount: float)
 signal invincibility_stop
 signal death
 
+
 func _ready():
 	health.value_changed.connect(_handle_new_health_value)
 
+
+## Takes a positive amount of damage and applies it to the health, assuming
+## the player is not invincible.
 func damage(amount: float):
-	if invincible_time > 0:
+	if invincible_time > 0 or amount < 0:
 		return
 	
 	health.value -= amount
+
+
+## Takes a positive amount of healing and applies it to the health
+func heal(amount: float):
+	if amount < 0:
+		return
+
+	health.value += amount
+
 
 func _handle_new_health_value(_res: CharacterResource, diff: float):
 	if diff < 0:
@@ -34,6 +47,7 @@ func _handle_new_health_value(_res: CharacterResource, diff: float):
 		healed.emit(diff)
 	
 	state = State.ALIVE if health.value > 0 else State.DEAD
+
 
 func _process(dt):
 	if invincible_time == 0.0:
