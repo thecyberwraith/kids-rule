@@ -29,6 +29,7 @@ var healths: Array[CharacterResource] = []
 func _ready():
 	super._ready()
 	child_order_changed.connect(_on_child_order_changed)
+	_on_child_order_changed()
 
 ## Should be called right before the scene is changed.
 func prepare_unload():
