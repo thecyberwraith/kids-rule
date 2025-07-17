@@ -26,6 +26,7 @@ var pausing_input: PlayerInput = null:
 
 var tabs_insertion_index = 1
 var before_quit_index = -2
+var players_idx = -1
 
 func _ready():
 	if not include_resume:
@@ -48,6 +49,8 @@ func _ready():
 		tabs.add_child(tab)
 		tabs.move_child(tab, before_quit_index)
 
+	players_idx = tabs.get_children().find_custom(func(x): return x.name == "Players")
+	
 	_create_buttons()
 	_check_for_emtpy_inputs()
 
@@ -80,6 +83,11 @@ func _create_buttons():
 		buttons.get_child(0).call_deferred("grab_focus")
 
 
+## Handle the action of a pause menu button. For regular panels, the focus will
+## be given to the panel. The other actions are as follows:
+## - Resume: unpause the menu
+## - Home: Change scenes to the home level
+## - Quit: Well... it quits.
 func _select_panel(panel: int):
 	var panel_name: String = tabs.get_child(panel).name
 	
@@ -95,24 +103,36 @@ func _select_panel(panel: int):
 	else:
 		print("Selecting generic panel.")
 		var pause_panel: PauseMenuPanel = tabs.get_child(panel)
+		tabs.current_tab = panel
 		pause_panel.previous_focus = buttons.get_child(panel)
 		pause_panel.pause_menu = self
 		pause_panel.call_deferred("grab_focus")
 
 
+## Pauses the game, shows the Players panel, and gives the focus to that Panel
 func switch_to_player_panel():
 	print("Performing switch to player panel.")
-	pause(null)
-	_select_panel(tabs.get_node("Players").get_index())
+	pause(null, "Players")
+	_select_panel(players_idx)
 
 
-func pause(input: PlayerInput):
+## Pause the game and select a button (by button text) to have highlighted. The
+## default is to show the first button.
+func pause(input: PlayerInput, highlight: String = ""):
 	get_tree().paused = true
 	visible = true
 	pausing_input = input
 	print("Pausing scene by ", input)
-	print("Giving focus to button ", buttons.get_child(0).text)
-	buttons.get_child(0).call_deferred("grab_focus")
+	
+	var button_idx := 0
+	
+	if highlight.length() > 0:
+		button_idx = buttons.get_children().find_custom(func(x): return x.text == highlight)
+		if button_idx < 0:
+			button_idx = 0
+	
+	print("Giving focus to button ", buttons.get_child(button_idx).text)
+	buttons.get_child(button_idx).call_deferred("grab_focus")
 
 
 func unpause():
