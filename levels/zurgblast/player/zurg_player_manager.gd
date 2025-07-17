@@ -30,6 +30,7 @@ func _ready():
 	super._ready()
 	child_order_changed.connect(_on_child_order_changed)
 
+## Should be called right before the scene is changed.
 func prepare_unload():
 	child_order_changed.disconnect(_on_child_order_changed)
 
@@ -37,7 +38,9 @@ func _on_child_order_changed():
 	for handler in healths:
 		if handler.value_changed.is_connected(_on_node_health_change):
 			handler.value_changed.disconnect(_on_node_health_change)
+
 	healths = _get_damage_handlers()
+
 	for handler in healths:
 		if not handler.value_changed.is_connected(_on_node_health_change):
 			handler.value_changed.connect(_on_node_health_change)
