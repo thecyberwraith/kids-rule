@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://b2xtu7ba2rsl6"]
+[gd_scene load_steps=65 format=3 uid="uid://b2xtu7ba2rsl6"]
 
 [ext_resource type="Script" uid="uid://wgujldfv764m" path="res://levels/zurgblast/player/ranger_player.gd" id="1_t5s3s"]
 [ext_resource type="PackedScene" uid="uid://ddtsjuq1v7xhd" path="res://levels/zurgblast/player/laser/laser_beam.tscn" id="2_6tx33"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://mlnadeg6idv0" path="res://levels/zurgblast/player/ranger_state_fire.gd" id="9_6asnq"]
 [ext_resource type="Script" uid="uid://b7q64s8h3lppk" path="res://levels/zurgblast/player/state_fall.gd" id="9_g0tfm"]
 [ext_resource type="AudioStream" uid="uid://cx4s3ih2uc3cn" path="res://levels/zurgblast/player/sounds/sfx_movement_jump14_landing.wav" id="10_g0tfm"]
+[ext_resource type="PackedScene" uid="uid://bo5cqci5rngfl" path="res://levels/zurgblast/player/heal_particles/healing_particles.tscn" id="10_rnemh"]
 [ext_resource type="AudioStream" uid="uid://be5yae7bftshs" path="res://levels/zurgblast/player/sounds/sfx_movement_footstepsloop4_fast.wav" id="12_x8fx8"]
 [ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/CharacterResource.gd" id="13_ic2u0"]
 [ext_resource type="Script" uid="uid://ckjxtd37v7al7" path="res://levels/zurgblast/player/ranger_state_damage.gd" id="13_kdk1u"]
@@ -24,6 +25,16 @@
 [ext_resource type="AudioStream" uid="uid://bjyfsgdwrn4fg" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage2.wav" id="20_t366r"]
 [ext_resource type="AudioStream" uid="uid://cf1ghc3sotp8h" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage3.wav" id="21_kwu3j"]
 [ext_resource type="Script" uid="uid://cfhe4hvwyuyvf" path="res://levels/zurgblast/player/ranger_state_defeated.gd" id="22_t366r"]
+[ext_resource type="Script" uid="uid://brp0r47w8du77" path="res://levels/zurgblast/player/ranger_state_heal.gd" id="23_kwu3j"]
+
+[sub_resource type="Resource" id="Resource_t366r"]
+resource_local_to_scene = true
+script = ExtResource("13_ic2u0")
+name = "Healing Burst"
+min_value = 0.0
+max_value = 10.0
+value = 0.0
+metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_72rrw"]
 shader = ExtResource("3_wfjnu")
@@ -91,6 +102,21 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kwu3j"]
+resource_name = "burst"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"heal"]
 }
 
 [sub_resource type="Animation" id="Animation_kdk1u"]
@@ -450,6 +476,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x8fx8"]
 _data = {
 &"RESET": SubResource("Animation_rq8gb"),
+&"burst": SubResource("Animation_kwu3j"),
 &"damaged": SubResource("Animation_kdk1u"),
 &"defeat": SubResource("Animation_t366r"),
 &"fall": SubResource("Animation_ljv5u"),
@@ -487,70 +514,74 @@ shader_parameter/ossilation_factor = 0.0
 shader_parameter/min_intensity = 0.0
 shader_parameter/max_intensity = 0.9
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iw5bf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t366r"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(0, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1sken"]
-atlas = ExtResource("3_fuqmf")
-region = Rect2(32, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rq8gb"]
-atlas = ExtResource("3_fuqmf")
-region = Rect2(64, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g0tfm"]
-atlas = ExtResource("3_fuqmf")
-region = Rect2(96, 32, 32, 32)
+region = Rect2(0, 36, 32, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kwu3j"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(64, 96, 32, 32)
+region = Rect2(32, 36, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kdk1u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnemh"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(0, 96, 32, 32)
+region = Rect2(64, 36, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ojsgv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3k0r"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(32, 96, 32, 32)
+region = Rect2(96, 36, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1elfs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0x0r"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(0, 64, 32, 32)
+region = Rect2(64, 108, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ljv5u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwxp5"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(32, 64, 32, 32)
+region = Rect2(0, 108, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6asnq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ky2n"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(0, 32, 32, 32)
+region = Rect2(32, 108, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6tx33"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6ojb"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(96, 108, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wfjnu"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1878t"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(0, 72, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_72rrw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bhsa"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(32, 72, 32, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ic2u0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4g66d"]
 atlas = ExtResource("3_fuqmf")
-region = Rect2(96, 0, 32, 32)
+region = Rect2(0, 36, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1orwr"]
+atlas = ExtResource("3_fuqmf")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcsj4"]
+atlas = ExtResource("3_fuqmf")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdxas"]
+atlas = ExtResource("3_fuqmf")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ua8cp"]
+atlas = ExtResource("3_fuqmf")
+region = Rect2(96, 0, 32, 36)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kdk1u"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_iw5bf")
+"texture": SubResource("AtlasTexture_t366r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1sken")
+"texture": SubResource("AtlasTexture_kwu3j")
 }],
 "loop": true,
 "name": &"action",
@@ -558,10 +589,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rq8gb")
+"texture": SubResource("AtlasTexture_rnemh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g0tfm")
+"texture": SubResource("AtlasTexture_a3k0r")
 }],
 "loop": true,
 "name": &"damaged",
@@ -569,7 +600,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kwu3j")
+"texture": SubResource("AtlasTexture_x0x0r")
 }],
 "loop": true,
 "name": &"defeat",
@@ -577,10 +608,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kdk1u")
+"texture": SubResource("AtlasTexture_qwxp5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ojsgv")
+"texture": SubResource("AtlasTexture_8ky2n")
 }],
 "loop": true,
 "name": &"fall",
@@ -588,10 +619,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1elfs")
+"texture": SubResource("AtlasTexture_t6ojb")
+}],
+"loop": true,
+"name": &"heal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1878t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ljv5u")
+"texture": SubResource("AtlasTexture_6bhsa")
 }],
 "loop": true,
 "name": &"laser",
@@ -599,7 +638,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6asnq")
+"texture": SubResource("AtlasTexture_4g66d")
 }],
 "loop": true,
 "name": &"still",
@@ -607,16 +646,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6tx33")
+"texture": SubResource("AtlasTexture_1orwr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wfjnu")
+"texture": SubResource("AtlasTexture_vcsj4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_72rrw")
+"texture": SubResource("AtlasTexture_mdxas")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ic2u0")
+"texture": SubResource("AtlasTexture_ua8cp")
 }],
 "loop": true,
 "name": &"walk",
@@ -626,12 +665,26 @@ animations = [{
 [sub_resource type="ViewportTexture" id="ViewportTexture_kdk1u"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwu3j"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t366r"]
+bg_color = Color(4.04298e-06, 0.72478, 0.222157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rnemh"]
+radius = 1.25221
+
 [node name="RangerPlayer" type="CharacterBody3D"]
 collision_layer = 2
 collision_mask = 21
 floor_max_angle = 1.22173
 floor_snap_length = 0.2
 script = ExtResource("1_t5s3s")
+healing_burst_level = SubResource("Resource_t366r")
 
 [node name="Visuals" type="Node3D" parent="."]
 
@@ -652,11 +705,14 @@ stream = SubResource("AudioStreamRandomizer_jf7c3")
 volume_db = 4.194
 
 [node name="ranger" type="Sprite3D" parent="Visuals"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0222186, 0.796697, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0676726, 0.796697, 0)
+offset = Vector2(0, 2)
 pixel_size = 0.05
 alpha_cut = 2
 texture_filter = 0
 texture = SubResource("ViewportTexture_ic2u0")
+
+[node name="HealingParticles" parent="Visuals" instance=ExtResource("10_rnemh")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -707,9 +763,10 @@ metadata/_custom_type_script = "uid://bj0qqyveye3xt"
 stream = ExtResource("12_x8fx8")
 bus = &"Effects"
 
-[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("laser", "walk", "fall")]
+[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("laser", "heal", "walk", "fall")]
 script = ExtResource("8_6asnq")
 laser = NodePath("../FireState")
+heal = NodePath("../HealState")
 walk = NodePath("../WalkState")
 fall = NodePath("../FallState")
 metadata/_custom_type_script = "uid://dlvbphqlqk6x3"
@@ -741,15 +798,24 @@ animation = "defeat"
 animation_property = &"animations"
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
+[node name="HealState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle")]
+script = ExtResource("23_kwu3j")
+idle = NodePath("../IdleState")
+animation = "burst"
+animation_property = &"animations"
+metadata/_custom_type_script = "uid://b1pgvr5ccdpm0"
+
+[node name="Timer" type="Timer" parent="StateMachine/HealState"]
+
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
-size = Vector2i(32, 32)
+size = Vector2i(32, 36)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewport"]
 material = SubResource("ShaderMaterial_kdk1u")
 sprite_frames = SubResource("SpriteFrames_kdk1u")
 animation = &"action"
-offset = Vector2(16, 16)
+offset = Vector2(16, 18)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80518, 0)
@@ -757,14 +823,39 @@ texture = SubResource("ViewportTexture_kdk1u")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
-size = Vector2i(100, 16)
+size = Vector2i(100, 20)
 
-[node name="ProgressBar" type="ProgressBar" parent="Sprite3D/SubViewport"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Sprite3D/SubViewport"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Health" type="ProgressBar" parent="Sprite3D/SubViewport/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 theme = ExtResource("15_ojsgv")
 value = 50.0
 show_percentage = false
+
+[node name="HealingBurst" type="ProgressBar" parent="Sprite3D/SubViewport/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("15_ojsgv")
+theme_override_constants/outline_size = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_kwu3j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_t366r")
+value = 25.0
+show_percentage = false
+
+[node name="HealAffectArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.515198, 0)
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealAffectArea"]
+shape = SubResource("SphereShape3D_rnemh")

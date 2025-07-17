@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://bo5cqci5rngfl"]
+
+[ext_resource type="Texture2D" uid="uid://da1i6g3yk4uhn" path="res://levels/zurgblast/player/heal_particles/cross.png" id="1_bjgpl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4kl0"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_bjgpl")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_oamsw"]
+material = SubResource("StandardMaterial3D_v4kl0")
+
+[sub_resource type="Curve" id="Curve_ixbsj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.172775, 1), 0.0, 0.0, 0, 0, Vector2(0.832461, 0.853933), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_lp1yu"]
+offsets = PackedFloat32Array(0, 0.2, 0.793939, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="CPUParticles3D" type="CPUParticles3D"]
+emitting = false
+amount = 16
+lifetime = 2.0
+one_shot = true
+preprocess = 0.5
+explosiveness = 0.42
+randomness = 0.16
+lifetime_randomness = 0.14
+mesh = SubResource("QuadMesh_oamsw")
+direction = Vector3(0, 0, 1)
+spread = 180.0
+flatness = 1.0
+gravity = Vector3(0, 4, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+damping_min = 0.5
+damping_max = 3.0
+scale_amount_min = 0.3
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_ixbsj")
+color = Color(0.043572, 0.626773, 0.124924, 1)
+color_ramp = SubResource("Gradient_lp1yu")
+
+[node name="HealingParticles" type="Node3D" parent="."]

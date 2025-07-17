@@ -51,7 +51,8 @@ script = ExtResource("1_tno0q")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.905569, -0.273237, 0.324479, 0, 0.764921, 0.644124, -0.424199, -0.583298, 0.692689, 0, 0, 0)
-light_color = Color(1, 1, 0.729412, 1)
+light_color = Color(0.9988, 1, 0.95477, 1)
+light_energy = 0.885
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -129,7 +130,7 @@ autoplay = true
 bus = &"BG Music"
 
 [node name="Ranger" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.9974, 3.52935, -2.06516)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.9974, 3.77117, -2.06516)
 pixel_size = 0.07
 shaded = true
 double_sided = false
@@ -137,10 +138,11 @@ alpha_cut = 2
 texture_filter = 2
 texture = ExtResource("9_tr1w2")
 region_enabled = true
-region_rect = Rect2(61, 0, 36, 34)
+region_rect = Rect2(99, 107.457, 26, 37.3926)
 
 [node name="LoadGameArea" parent="Ranger" instance=ExtResource("6_hb728")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.962646, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.17821, 0)
+visible = false
 scene = "res://levels/zurgblast/ZurgLevel.tscn"
 color_gradient = SubResource("Gradient_pljee")
 confirm_duration = 3.0
