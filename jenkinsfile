@@ -1,0 +1,25 @@
+podTemplate(cloud: 'home-cluster', containers: [containerTemplate(name: 'godot', alwaysPullImage: true, image: 'brainiac:32000/godot', runAsUser: '1000')]) {
+    node(POD_LABEL) {
+        stage('Clone Project') {
+            git credentialsId: 'jenkins-github-token', url: 'https://github.com/thecyberwraith/kids-rule.git', branch: 'release'
+        }
+        container('godot') {
+            stage('Prepare Godot Version') {
+                sh 'set-godot-from-project.sh'
+            }
+            stage('Export Game') {
+                sh 'mkdir exports'
+                sh 'godot --headless --verbose --path ./ --export-release \"Windows Desktop\" exports/kidsrule.exe'
+                sh 'godot --headless --verbose --path ./ --export-release Linux exports/kidsrule.x86_64'
+            }
+        }
+        stage('Publish Game') {
+            withCredentials([usernameColonPassword(credentialsId: 'nextcloud-webdav-credentials', variable: 'CREDS'), usernamePassword(credentialsId: 'nextcloud-webdav-credentials', passwordVariable: 'CREDS_PWD', usernameVariable: 'CREDS_USR')]) {
+                sh '''
+                    curl -u "$CREDS" -T exports/kidsrule.exe "https://cloud.lugotopia.net/remote.php/dav/files/$CREDS_USR/Releases/KidsRule/"
+                    curl -u "$CREDS" -T exports/kidsrule.x86_64 "https://cloud.lugotopia.net/remote.php/dav/files/$CREDS_USR/Releases/KidsRule/"
+                '''
+            }
+        }
+    }
+}
