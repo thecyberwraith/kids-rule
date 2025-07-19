@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 
 Characters="*res://players/data/available_characters.gd"
 PlayerInputs="*res://input/player_inputs.gd"
-Settings="*res://utility/settings.gd"
+Settings="*res://utility/settings/settings.gd"
 
 [display]
 
