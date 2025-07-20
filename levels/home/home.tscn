@@ -142,7 +142,6 @@ region_rect = Rect2(99, 107.457, 26, 37.3926)
 
 [node name="LoadGameArea" parent="Ranger" instance=ExtResource("6_hb728")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.17821, 0)
-visible = false
 scene = "res://levels/zurgblast/ZurgLevel.tscn"
 color_gradient = SubResource("Gradient_pljee")
 confirm_duration = 3.0
