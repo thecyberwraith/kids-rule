@@ -35,6 +35,10 @@ func _ready():
 		func(_diff):
 			$StateMachine.transition_to_state($StateMachine/Damage)
 	)
+	damage.revived.connect(
+		func():
+			$StateMachine.transition_to_state($StateMachine/IdleState)
+	)
 	damage.health.value_changed.connect(func(_val: CharacterResource, _diff: float):
 		health_bar.max_value = damage.health.max_value
 		health_bar.value = damage.health.value
