@@ -37,3 +37,9 @@ func validate(value: Variant = null):
 		value = Settings.get_value(_section, _key)
 	else:
 		return _validate_settings_value(value)
+
+
+## Returns an editor Control to represent this value. Ideally, this control
+## handles setting the setting value based on this control automatically.
+func get_editor_control() -> Control:
+	return Control.new()

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwpyfffovgpxa"]
+
+[ext_resource type="Script" uid="uid://bdxoi6k4yar2n" path="res://ui/pause/settings_panel_item_separator.gd" id="1_xfglj"]
+
+[node name="SettingsPanelItemSeparator" type="HBoxContainer"]
+offset_right = 64.0
+offset_bottom = 23.0
+size_flags_horizontal = 3
+script = ExtResource("1_xfglj")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Section"
+horizontal_alignment = 2
+vertical_alignment = 1
