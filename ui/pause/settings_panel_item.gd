@@ -7,7 +7,7 @@ extends HBoxContainer
 var setting: SettingsItem:
 	set(value):
 		setting = value
-		label.text = setting._key.capitalize()
+		label.text = setting.key.capitalize()
 		if get_child_count() > 1:
 			for i in range(1, get_child_count()):
 				get_child(i).queue_free()

@@ -8,6 +8,7 @@ extends SettingsItem
 var _enum_dict: Dictionary[String, int] = {}
 
 
+@warning_ignore("shadowed_variable_base_class")
 func _init(section: String, key: String, default: int, enum_type: Dictionary):
 	for some_key in enum_type:
 		if not typeof(some_key) == TYPE_STRING:
@@ -32,8 +33,8 @@ func get_editor_control() -> OptionButton:
 	for option in _enum_dict:
 		control.add_item(option, _enum_dict[option])
 
-	control.selected = Settings.get_value(_section, _key)
+	control.selected = get_value()
 	control.item_selected.connect(func(idx):
-		Settings.set_value(_section, _key, control.get_item_id(idx))
+		set_value(control.get_item_id(idx))
 	)
 	return control

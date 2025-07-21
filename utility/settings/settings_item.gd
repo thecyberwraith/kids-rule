@@ -4,14 +4,26 @@
 class_name SettingsItem
 extends Resource
 
-## The section (like an ini file) to group the setting under.
 var _section: String
-## The key, which should be unique within a section.
 var _key: String
-## The default value which is loaded when not already specified in the settings.
 var _default: Variant
 
 
+var section: String:
+	get:
+		return _section
+
+var key: String:
+	get:
+		return _key
+
+signal setting_changed(new_value)
+
+## Creates a new, immutable setting:
+## - [param section]: The section (like an ini file) to group the setting under.
+## - [param key]: The key, which should be unique within a section.
+## - [param default]: The default value which is loaded when not already specified in the settings.
+@warning_ignore("shadowed_variable")
 func _init(section: String, key: String, default: Variant):
 	_section = section
 	_key = key
@@ -19,8 +31,8 @@ func _init(section: String, key: String, default: Variant):
 
 	if not _validate_settings_value(_default):
 		push_error("Settings %s/%s does not pass type check for default %s" % [
-			_section,
-			_key,
+			section,
+			key,
 			_default,
 		])
 
@@ -34,9 +46,23 @@ func _validate_settings_value(_value: Variant) -> bool:
 ## check the value already stored in the settings.
 func validate(value: Variant = null):
 	if value == null:
-		value = Settings.get_value(_section, _key)
+		value = Settings.get_value(section, key)
 	else:
 		return _validate_settings_value(value)
+
+
+## Sets the value using the Settings global node.
+func set_value(value: Variant):
+	if not validate(value):
+		push_error("Setting %s/%s cannot support value %s" % [section, key, value])
+	else:
+		Settings.write_setting(section, key, value)
+		setting_changed.emit(value)
+
+
+## Gets the value using the Settings global node.
+func get_value() -> Variant:
+	return Settings.read_setting(section, key)
 
 
 ## Returns an editor Control to represent this value. Ideally, this control

@@ -15,12 +15,12 @@ func _ready():
 func _populate_settings():
 	var last_section: String = ""
 
-	for setting in Settings.DEFAULTS:
-		if last_section != setting._section:
+	for setting in Settings.All:
+		if last_section != setting.section:
 			var new_sep: SettingsPanelItemSeparator = settings_sep.instantiate()
-			new_sep.label = setting._section
+			new_sep.label = setting.section
 			container.add_child(new_sep)
-			last_section = setting._section
+			last_section = setting.section
 
 		var new_control: SettingsPanelItem = settings_item.instantiate()
 		container.add_child(new_control)

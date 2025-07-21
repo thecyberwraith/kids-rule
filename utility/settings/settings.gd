@@ -3,7 +3,7 @@
 ## errors are shown. In most regards, acts as ConfigFile.
 extends Node
 
-var DEFAULTS: Array[SettingsItem] = [
+var All: Array[SettingsItem] = [
 	SettingsItemEnum.new("game", "difficulty", Difficulty.NORMAL, Difficulty)
 ]
 
@@ -43,7 +43,7 @@ func _load_config_data():
 func _remove_extra_settings():
 	for section in _data.get_sections():
 		for key in _data.get_section_keys(section):
-			if _find_settings_item(section, key) == null:
+			if get_setting_item(section, key) == null:
 				print("Setting %s/%s is not a setting: removing" % [section, key])
 				_data.erase_section_key(section, key)
 
@@ -51,7 +51,7 @@ func _remove_extra_settings():
 ## Sets default values for any settings in the DEFAULTS array which is are not
 ## present in the loaded settings.
 func _add_missing_default_settings():
-	for item in DEFAULTS:
+	for item in All:
 		if not _data.has_section_key(item._section, item._key):
 			print("Setting default value of %s for %s/%s" % [
 				item._default, item._section, item._key
@@ -61,37 +61,46 @@ func _add_missing_default_settings():
 
 ## Finds the associated settings item in the DEFAULTS array and return it if
 ## found. If not found, returns null.
-func _find_settings_item(section: String, key: String) -> SettingsItem:
-	var idx := DEFAULTS.find_custom(func(x):
+func get_setting_item(section: String, key: String) -> SettingsItem:
+	var idx := All.find_custom(func(x):
 		return x._section == section and x._key == key
 	)
 	
 	if idx == -1:
 		return null
 	else:
-		return DEFAULTS[idx]
+		return All[idx]
 
 
-## Retrieves the stored value from memory if it exists.
-func get_value(section: String, key: String) -> Variant:
-	var setting := _find_settings_item(section, key)
+## Reads the requested setting without any safety checks. Consider using
+## [method get_setting_item] or [method get_setting] instead.
+func read_setting(section: String, key: String) -> Variant:
+	return _data.get_value(section, key)
+
+
+func get_setting(section: String, key: String) -> Variant:
+	var setting := get_setting_item(section, key)
 
 	if setting == null:
 		push_error("Setting %s/%s does not exist" % [section, key])
 		return null
 
-	return _data.get_value(section, key)
+	return setting.get_value()
 
 
-## Sets the value to memory and then to disk. If the key is not settings or not
-## a valid type, then an error is raised.
-func set_value(section: String, key: String, value: Variant):
-	var setting := _find_settings_item(section, key)
+## Stores the requested setting without any safety checks. Consider user
+## [method set_setting] or [method SettingItem.set_value] instead. Stores
+## the new settings onto disk.
+func write_setting(section: String, key: String, value: Variant):
+	_data.set_value(section, key, value)
+	_data.save(FILE_PATH)
+
+
+## Retrieves the associated setting item and sets its value.
+func set_setting(section: String, key: String, value: Variant):
+	var setting := get_setting_item(section, key)
 	
 	if setting == null:
-		push_error("Setting %s/%s does not exist. Not setting value" % [section, key])
-	elif not setting.validate(value):
-		push_error("Setting %s/%s cannot support value %s" % [section, key, value])
+		push_error("Setting %s/%s does not exist. Not setting value." % [section, key])
 	else:
-		_data.set_value(section, key, value)
-		_data.save(FILE_PATH)
+		setting.set_value(value)
