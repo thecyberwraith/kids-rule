@@ -5,10 +5,10 @@ extends SettingsItem
 var _type: Variant.Type
 
 
-func _init(section: String, key: String, default: Variant, type: Variant.Type):
+func _init(a_section: String, a_key: String, a_default: Variant, type: Variant.Type):
 	_type = type
-	super._init(section, key, default)
-	
+	super._init(a_section, a_key, a_default)
+
 
 func _validate_settings_value(value: Variant):
 	return typeof(value) == _type

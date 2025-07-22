@@ -4,7 +4,8 @@
 extends Node
 
 var All: Array[SettingsItem] = [
-	SettingsItemEnum.new("game", "difficulty", Difficulty.NORMAL, Difficulty)
+	SettingsItemEnum.new("game", "difficulty", Difficulty.NORMAL, Difficulty),
+	SettingsItemBool.new("video", "fullscreen", false),
 ]
 
 ## How difficulty for mini games should scale.
