@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Settings="*res://utility/settings/settings.gd"
+ConnectToSettings="*res://utility/settings/connect_to_settings.gd"
 Characters="*res://players/data/available_characters.gd"
 PlayerInputs="*res://input/player_inputs.gd"
 

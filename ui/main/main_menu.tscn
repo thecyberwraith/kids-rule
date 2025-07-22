@@ -13,3 +13,4 @@ grow_vertical = 2
 [node name="PauseMenu" parent="." instance=ExtResource("1_ocgdw")]
 layout_mode = 1
 include_resume = false
+additional_tabs = Array[String](["res://ui/pause/settings_panel.tscn"])

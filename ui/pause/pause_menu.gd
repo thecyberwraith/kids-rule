@@ -10,7 +10,8 @@ extends Control
 @export var include_resume: bool = true
 @export var include_home: bool = true
 @export var player_selection_scene: PackedScene = null
-@export var additional_tabs: Array[PauseMenuPanel] = []
+## The paths to PausePanels to instantiate.
+@export var additional_tabs: Array[String] = []
 
 signal game_resumed
 
@@ -46,8 +47,9 @@ func _ready():
 		additional_tabs.insert(0, player_selection_scene.instantiate())
 
 	for tab in additional_tabs:
-		tabs.add_child(tab)
-		tabs.move_child(tab, before_quit_index)
+		var a_tab: PauseMenuPanel = load(tab).instantiate()
+		tabs.add_child(a_tab)
+		tabs.move_child(a_tab, before_quit_index)
 
 	players_idx = tabs.get_children().find_custom(func(x): return x.name == "Players")
 	
