@@ -861,6 +861,7 @@ offset = Vector2(16, 18)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80518, 0)
+texture_filter = 2
 texture = SubResource("ViewportTexture_kdk1u")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
