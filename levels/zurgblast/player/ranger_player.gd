@@ -1,7 +1,7 @@
 class_name RangerPlayer extends CharacterBody3D
 
 @export var input : PlayerInput = PlayerInput.new()
-@export var healing_burst_level : CharacterResource = CharacterResource.new(
+@export var healing_burst_level : ResourceValue = ResourceValue.new(
 	"Healing Burst",
 	0.0,
 	10.0,
@@ -40,14 +40,7 @@ func _ready():
 			$StateMachine.transition_to_state($StateMachine/IdleState)
 	)
 	damage.health.connect_to_progress_bar(health_bar)
-
-	healing_burst_level.value_changed.connect(func(val: CharacterResource, _diff: float):
-		healing_burst_bar.max_value = val.max_value
-		healing_burst_bar.value = val.value
-	)
-	
-	healing_burst_bar.max_value = healing_burst_level.max_value
-	healing_burst_bar.value = healing_burst_level.value
+	healing_burst_level.connect_to_progress_bar(healing_burst_bar)
 
 func _process(delta):
 	healing_burst_level.value += delta

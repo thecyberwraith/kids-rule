@@ -3,40 +3,33 @@
 class_name Interval extends Resource
 
 ## The lower bound of the interval.
-@export var a: float = 0.0:
-	set(value):
-		if value > b:
-			value = b
-		a = value
-		bounds_changed.emit()
+@export var a:= DifficultyBasedFloat.new(0.0)
+## Upper bound of the interval
+@export var b:= DifficultyBasedFloat.new(1.0)
 
-
-@export var b: float = 1.0:
-	set(value):
-		if value < a:
-			value = a
-		b = value
-		bounds_changed.emit()
-
+var minimum: float:
+	get:
+		return a.value
+var maximum: float:
+	get:
+		return b.value
 var length: float:
 	get:
-		return b - a
-
-signal bounds_changed
+		return b.value - a.value
 
 
 func _init(x: float = 0.0, y: float=1.0):
 	if x <= y:
-		a = x
-		b = y
+		a.value = x
+		b.value = y
 	else:
 		push_warning("Interval corrected %s > %s error." % [x,y])
-		a = y
-		b = x
+		a.value = y
+		b.value = x
 
 
 func clamp(value: float) -> float:
-	return clampf(value, a, b)
+	return clampf(value, a.value, b.value)
 
 
 func _to_string() -> String:

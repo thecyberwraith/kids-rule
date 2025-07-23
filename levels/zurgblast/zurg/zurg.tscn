@@ -1,13 +1,14 @@
-[gd_scene load_steps=67 format=3 uid="uid://wit0fthjhfxp"]
+[gd_scene load_steps=68 format=3 uid="uid://wit0fthjhfxp"]
 
 [ext_resource type="Texture2D" uid="uid://dr38tiv3rk4li" path="res://levels/zurgblast/zurg/zurg.png" id="1_a8pmx"]
 [ext_resource type="Script" uid="uid://cokay3qud7gn1" path="res://levels/zurgblast/zurg/zurg.gd" id="1_dgcbe"]
 [ext_resource type="Script" uid="uid://b1dffa6ukg1i6" path="res://levels/zurgblast/zurg/projectile/zurg_launcher.gd" id="3_nd5n5"]
 [ext_resource type="PackedScene" uid="uid://b18iljn106to4" path="res://levels/zurgblast/zurg/projectile/zurg_projectile.tscn" id="4_y3f7p"]
-[ext_resource type="Script" uid="uid://neoh44hq0jbr" path="res://utility/DamageHandler.gd" id="5_e2acf"]
+[ext_resource type="Script" uid="uid://neoh44hq0jbr" path="res://utility/damage_handler.gd" id="5_e2acf"]
+[ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/values/resource_value.gd" id="5_kn7a5"]
+[ext_resource type="Script" uid="uid://dg3sohddc7wys" path="res://utility/values/difficulty_based_float.gd" id="5_qnj6g"]
 [ext_resource type="Script" uid="uid://0uslhklxg7s7" path="res://utility/values/interval.gd" id="5_u8p8w"]
 [ext_resource type="Shader" uid="uid://b4g23qb6ele23" path="res://shaders/flash_color_2d.tres" id="6_72txg"]
-[ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/values/difficulty_based_resource.gd" id="6_gnrcj"]
 [ext_resource type="Script" uid="uid://bn3ny2jx53jdr" path="res://levels/zurgblast/zurg/states/zurg_state_machine.gd" id="8_erdk3"]
 [ext_resource type="Script" uid="uid://caqqveycr25eg" path="res://levels/zurgblast/zurg/states/damaged.gd" id="9_4vqep"]
 [ext_resource type="Script" uid="uid://0wb10fbxedyj" path="res://levels/zurgblast/zurg/states/wander.gd" id="9_erdk3"]
@@ -23,33 +24,32 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_all2i"]
 
-[sub_resource type="Resource" id="Resource_u8p8w"]
-script = ExtResource("5_u8p8w")
-a = 0.0
-b = 10.0
-metadata/_custom_type_script = "uid://0uslhklxg7s7"
-
-[sub_resource type="Resource" id="Resource_qnj6g"]
-script = ExtResource("5_u8p8w")
-a = 0.0
-b = 3.0
-metadata/_custom_type_script = "uid://0uslhklxg7s7"
-
 [sub_resource type="Resource" id="Resource_bsruj"]
+script = ExtResource("5_qnj6g")
+default = 0.0
+difficulty_map = Dictionary[int, float]({})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
+[sub_resource type="Resource" id="Resource_m5v0y"]
+script = ExtResource("5_qnj6g")
+default = 10.0
+difficulty_map = Dictionary[int, float]({
+0: 3.0,
+2: 20.0
+})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
+[sub_resource type="Resource" id="Resource_3k8at"]
 script = ExtResource("5_u8p8w")
-a = 0.0
-b = 20.0
+a = SubResource("Resource_bsruj")
+b = SubResource("Resource_m5v0y")
 metadata/_custom_type_script = "uid://0uslhklxg7s7"
 
 [sub_resource type="Resource" id="Resource_v0u3p"]
 resource_local_to_scene = true
-script = ExtResource("6_gnrcj")
+script = ExtResource("5_kn7a5")
 name = "Health"
-default = SubResource("Resource_u8p8w")
-difficulty_map = Dictionary[int, ExtResource("5_u8p8w")]({
-0: SubResource("Resource_qnj6g"),
-2: SubResource("Resource_bsruj")
-})
+interval = SubResource("Resource_3k8at")
 value = 10.0
 metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 

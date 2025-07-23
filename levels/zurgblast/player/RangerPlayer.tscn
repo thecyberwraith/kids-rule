@@ -1,12 +1,14 @@
-[gd_scene load_steps=68 format=3 uid="uid://b2xtu7ba2rsl6"]
+[gd_scene load_steps=73 format=3 uid="uid://b2xtu7ba2rsl6"]
 
 [ext_resource type="Script" uid="uid://wgujldfv764m" path="res://levels/zurgblast/player/ranger_player.gd" id="1_t5s3s"]
 [ext_resource type="PackedScene" uid="uid://ddtsjuq1v7xhd" path="res://levels/zurgblast/player/laser/laser_beam.tscn" id="2_6tx33"]
 [ext_resource type="Script" uid="uid://0uslhklxg7s7" path="res://utility/values/interval.gd" id="2_a3k0r"]
 [ext_resource type="Texture2D" uid="uid://wdj46xqvb1bj" path="res://players/ellie_head.png" id="2_p4t0w"]
+[ext_resource type="Script" uid="uid://dg3sohddc7wys" path="res://utility/values/difficulty_based_float.gd" id="2_x0x0r"]
 [ext_resource type="Texture2D" uid="uid://bnwfbag8ounsm" path="res://levels/zurgblast/player/player_sprites.png" id="3_fuqmf"]
 [ext_resource type="Shader" uid="uid://b4g23qb6ele23" path="res://shaders/flash_color_2d.tres" id="3_wfjnu"]
-[ext_resource type="Script" uid="uid://neoh44hq0jbr" path="res://utility/DamageHandler.gd" id="4_fuqmf"]
+[ext_resource type="Script" uid="uid://neoh44hq0jbr" path="res://utility/damage_handler.gd" id="4_fuqmf"]
+[ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/values/resource_value.gd" id="4_qwxp5"]
 [ext_resource type="Script" uid="uid://b0uvg7paf1564" path="res://levels/zurgblast/player/laser/laser_launcher.gd" id="4_wfjnu"]
 [ext_resource type="Script" uid="uid://bfluc1wi7eboh" path="res://levels/zurgblast/player/ranger_state_machine.gd" id="5_iw5bf"]
 [ext_resource type="AudioStream" uid="uid://dmoknkt8tymq" path="res://levels/zurgblast/player/laser/laser5.mp3" id="6_vtdwa"]
@@ -19,7 +21,6 @@
 [ext_resource type="AudioStream" uid="uid://cx4s3ih2uc3cn" path="res://levels/zurgblast/player/sounds/sfx_movement_jump14_landing.wav" id="10_g0tfm"]
 [ext_resource type="PackedScene" uid="uid://bo5cqci5rngfl" path="res://levels/zurgblast/player/heal_particles/healing_particles.tscn" id="10_rnemh"]
 [ext_resource type="AudioStream" uid="uid://be5yae7bftshs" path="res://levels/zurgblast/player/sounds/sfx_movement_footstepsloop4_fast.wav" id="12_x8fx8"]
-[ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/values/difficulty_based_resource.gd" id="13_ic2u0"]
 [ext_resource type="Script" uid="uid://ckjxtd37v7al7" path="res://levels/zurgblast/player/ranger_state_damage.gd" id="13_kdk1u"]
 [ext_resource type="Theme" uid="uid://bcuyjrsty3xqf" path="res://ui/generic_health_bar_style.theme" id="15_ojsgv"]
 [ext_resource type="AudioStream" uid="uid://djy0ealwux2op" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage1.wav" id="19_jf7c3"]
@@ -28,26 +29,32 @@
 [ext_resource type="Script" uid="uid://cfhe4hvwyuyvf" path="res://levels/zurgblast/player/ranger_state_defeated.gd" id="22_t366r"]
 [ext_resource type="Script" uid="uid://brp0r47w8du77" path="res://levels/zurgblast/player/ranger_state_heal.gd" id="23_kwu3j"]
 
-[sub_resource type="Resource" id="Resource_x0x0r"]
-script = ExtResource("2_a3k0r")
-a = 0.0
-b = 5.0
-metadata/_custom_type_script = "uid://0uslhklxg7s7"
+[sub_resource type="Resource" id="Resource_8ky2n"]
+script = ExtResource("2_x0x0r")
+default = 0.0
+difficulty_map = Dictionary[int, float]({})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
 
-[sub_resource type="Resource" id="Resource_qwxp5"]
+[sub_resource type="Resource" id="Resource_t6ojb"]
+script = ExtResource("2_x0x0r")
+default = 5.0
+difficulty_map = Dictionary[int, float]({
+0: 2.0,
+2: 10.0
+})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
+[sub_resource type="Resource" id="Resource_1878t"]
 script = ExtResource("2_a3k0r")
-a = 0.0
-b = 2.0
+a = SubResource("Resource_8ky2n")
+b = SubResource("Resource_t6ojb")
 metadata/_custom_type_script = "uid://0uslhklxg7s7"
 
 [sub_resource type="Resource" id="Resource_t366r"]
 resource_local_to_scene = true
-script = ExtResource("13_ic2u0")
+script = ExtResource("4_qwxp5")
 name = "Healing Burst"
-default = SubResource("Resource_x0x0r")
-difficulty_map = Dictionary[int, ExtResource("2_a3k0r")]({
-0: SubResource("Resource_qwxp5")
-})
+interval = SubResource("Resource_1878t")
 value = 0.0
 metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 
@@ -501,11 +508,32 @@ _data = {
 &"walk": SubResource("Animation_g0tfm")
 }
 
+[sub_resource type="Resource" id="Resource_6bhsa"]
+script = ExtResource("2_x0x0r")
+default = 0.0
+difficulty_map = Dictionary[int, float]({})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
+[sub_resource type="Resource" id="Resource_4g66d"]
+script = ExtResource("2_x0x0r")
+default = 5.0
+difficulty_map = Dictionary[int, float]({
+0: 10.0,
+2: 3.0
+})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
+[sub_resource type="Resource" id="Resource_1orwr"]
+script = ExtResource("2_a3k0r")
+a = SubResource("Resource_6bhsa")
+b = SubResource("Resource_4g66d")
+metadata/_custom_type_script = "uid://0uslhklxg7s7"
+
 [sub_resource type="Resource" id="Resource_jf7c3"]
 resource_local_to_scene = true
-script = ExtResource("13_ic2u0")
-name = "HEALTH"
-difficulty_map = Dictionary[int, ExtResource("2_a3k0r")]({})
+script = ExtResource("4_qwxp5")
+name = "Resource"
+interval = SubResource("Resource_1orwr")
 value = 5.0
 metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 

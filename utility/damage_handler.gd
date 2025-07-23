@@ -5,7 +5,7 @@
 class_name DamageHandler extends Node
 
 
-@export var health := DifficultyBasedResource.new("Health", 0.0, 10.0, 5.0)
+@export var health := ResourceValue.new("Health", 0.0, 10.0, 5.0)
 @export var full_health_on_ready := true
 
 @export_category("Invincibility")
@@ -33,7 +33,7 @@ signal revived
 
 func _ready():
 	if full_health_on_ready:
-		health.value = health.range.b
+		health.value = health.interval.maximum
 	
 	health.value_changed.connect(_handle_new_health_value)
 
@@ -58,9 +58,9 @@ func heal(amount: float):
 func _start_invincibility():
 	_invincible_time = invincible_duration
 	invincibility_start.emit()
+ 
 
-
-func _handle_new_health_value(_res: DifficultyBasedResource, diff: float):
+func _handle_new_health_value(_res: ResourceValue, diff: float):
 	if diff < 0:
 		damaged.emit(-diff)
 		if health.value == 0:
