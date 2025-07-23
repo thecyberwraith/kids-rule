@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://wit0fthjhfxp"]
+[gd_scene load_steps=69 format=3 uid="uid://wit0fthjhfxp"]
 
 [ext_resource type="Texture2D" uid="uid://dr38tiv3rk4li" path="res://levels/zurgblast/zurg/zurg.png" id="1_a8pmx"]
 [ext_resource type="Script" uid="uid://cokay3qud7gn1" path="res://levels/zurgblast/zurg/zurg.gd" id="1_dgcbe"]
@@ -330,6 +330,15 @@ animations = [{
 [sub_resource type="ViewportTexture" id="ViewportTexture_e2acf"]
 viewport_path = NodePath("SubViewport")
 
+[sub_resource type="Resource" id="Resource_qnj6g"]
+script = ExtResource("5_qnj6g")
+default = 3.0
+difficulty_map = Dictionary[int, float]({
+0: 1.5,
+2: 5.0
+})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qnj6g"]
 streams_count = 2
 stream_0/stream = ExtResource("12_kn7a5")
@@ -439,6 +448,7 @@ metadata/_custom_type_script = "uid://dswy2oapviqwo"
 [node name="wander" type="Node" parent="GenericStateMachine" node_paths=PackedStringArray("attack")]
 script = ExtResource("9_erdk3")
 attack = NodePath("../attack")
+wander_speed = SubResource("Resource_qnj6g")
 metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 
 [node name="PoseTimer" type="Timer" parent="GenericStateMachine/wander"]

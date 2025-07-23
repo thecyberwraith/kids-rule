@@ -48,5 +48,5 @@ func process(dt: float, zurg: Zurg):
 	elif zurg.position.z < -wander.wander_length:
 		move_direction = 1
 	
-	zurg.position.z += move_direction * wander.wander_speed * dt * 1.5
+	zurg.position.z += move_direction * wander.get_speed(zurg) * dt * 1.5
 	return null
