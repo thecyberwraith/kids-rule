@@ -6,6 +6,7 @@ class_name DifficultyBasedFloat extends Resource
 @export var default: float = 0.0
 @export var difficulty_map: Dictionary[Settings.Difficulty, float] = {}
 
+## The actual value, after checking the settings.
 var value: float:
 	get:
 		if not Settings.is_node_ready() or not Settings.get_setting("game", "difficulty") in difficulty_map:
