@@ -13,9 +13,12 @@ var need_fired: bool = false
 
 func on_enter_state(zurg: Zurg):
 	var distance := 10000000.0
+
 	for player in get_tree().get_nodes_in_group("rangers"):
-		if zurg.global_position.distance_squared_to(player.global_position) < distance:
+		var my_distance := zurg.global_position.distance_squared_to(player.global_position)
+		if my_distance < distance:
 			target = player
+			distance = my_distance
 
 	fired = 0
 	
