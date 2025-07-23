@@ -1,7 +1,8 @@
-[gd_scene load_steps=65 format=3 uid="uid://b2xtu7ba2rsl6"]
+[gd_scene load_steps=68 format=3 uid="uid://b2xtu7ba2rsl6"]
 
 [ext_resource type="Script" uid="uid://wgujldfv764m" path="res://levels/zurgblast/player/ranger_player.gd" id="1_t5s3s"]
 [ext_resource type="PackedScene" uid="uid://ddtsjuq1v7xhd" path="res://levels/zurgblast/player/laser/laser_beam.tscn" id="2_6tx33"]
+[ext_resource type="Script" uid="uid://0uslhklxg7s7" path="res://utility/values/interval.gd" id="2_a3k0r"]
 [ext_resource type="Texture2D" uid="uid://wdj46xqvb1bj" path="res://players/ellie_head.png" id="2_p4t0w"]
 [ext_resource type="Texture2D" uid="uid://bnwfbag8ounsm" path="res://levels/zurgblast/player/player_sprites.png" id="3_fuqmf"]
 [ext_resource type="Shader" uid="uid://b4g23qb6ele23" path="res://shaders/flash_color_2d.tres" id="3_wfjnu"]
@@ -18,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://cx4s3ih2uc3cn" path="res://levels/zurgblast/player/sounds/sfx_movement_jump14_landing.wav" id="10_g0tfm"]
 [ext_resource type="PackedScene" uid="uid://bo5cqci5rngfl" path="res://levels/zurgblast/player/heal_particles/healing_particles.tscn" id="10_rnemh"]
 [ext_resource type="AudioStream" uid="uid://be5yae7bftshs" path="res://levels/zurgblast/player/sounds/sfx_movement_footstepsloop4_fast.wav" id="12_x8fx8"]
-[ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/CharacterResource.gd" id="13_ic2u0"]
+[ext_resource type="Script" uid="uid://c3yikdq00m2m1" path="res://utility/values/difficulty_based_resource.gd" id="13_ic2u0"]
 [ext_resource type="Script" uid="uid://ckjxtd37v7al7" path="res://levels/zurgblast/player/ranger_state_damage.gd" id="13_kdk1u"]
 [ext_resource type="Theme" uid="uid://bcuyjrsty3xqf" path="res://ui/generic_health_bar_style.theme" id="15_ojsgv"]
 [ext_resource type="AudioStream" uid="uid://djy0ealwux2op" path="res://levels/zurgblast/player/sounds/sfx_sounds_damage1.wav" id="19_jf7c3"]
@@ -27,12 +28,26 @@
 [ext_resource type="Script" uid="uid://cfhe4hvwyuyvf" path="res://levels/zurgblast/player/ranger_state_defeated.gd" id="22_t366r"]
 [ext_resource type="Script" uid="uid://brp0r47w8du77" path="res://levels/zurgblast/player/ranger_state_heal.gd" id="23_kwu3j"]
 
+[sub_resource type="Resource" id="Resource_x0x0r"]
+script = ExtResource("2_a3k0r")
+a = 0.0
+b = 5.0
+metadata/_custom_type_script = "uid://0uslhklxg7s7"
+
+[sub_resource type="Resource" id="Resource_qwxp5"]
+script = ExtResource("2_a3k0r")
+a = 0.0
+b = 2.0
+metadata/_custom_type_script = "uid://0uslhklxg7s7"
+
 [sub_resource type="Resource" id="Resource_t366r"]
 resource_local_to_scene = true
 script = ExtResource("13_ic2u0")
 name = "Healing Burst"
-min_value = 0.0
-max_value = 10.0
+default = SubResource("Resource_x0x0r")
+difficulty_map = Dictionary[int, ExtResource("2_a3k0r")]({
+0: SubResource("Resource_qwxp5")
+})
 value = 0.0
 metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 
@@ -490,8 +505,7 @@ _data = {
 resource_local_to_scene = true
 script = ExtResource("13_ic2u0")
 name = "HEALTH"
-min_value = 0.0
-max_value = 5.0
+difficulty_map = Dictionary[int, ExtResource("2_a3k0r")]({})
 value = 5.0
 metadata/_custom_type_script = "uid://c3yikdq00m2m1"
 

@@ -39,13 +39,7 @@ func _ready():
 		func():
 			$StateMachine.transition_to_state($StateMachine/IdleState)
 	)
-	damage.health.value_changed.connect(func(_val: CharacterResource, _diff: float):
-		health_bar.max_value = damage.health.max_value
-		health_bar.value = damage.health.value
-	)
-	
-	health_bar.value = damage.health.value
-	health_bar.max_value = damage.health.max_value
+	damage.health.connect_to_progress_bar(health_bar)
 
 	healing_burst_level.value_changed.connect(func(val: CharacterResource, _diff: float):
 		healing_burst_bar.max_value = val.max_value

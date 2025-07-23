@@ -12,9 +12,8 @@ func _ready():
 	pause.game_resumed.connect(players.on_game_resume)
 	
 	zurg.damage.death.connect(game_won)
-	zurg.damage.health.value_changed.connect(update_zurg_health)
+	zurg.damage.health.connect_to_progress_bar(zurg_bar)
 
-	update_zurg_health(zurg.get_node("DamageHandler").health, 0)
 	players.all_health_drained.connect(game_lost)
 
 	overlay.text_display_over.connect(func(): 
@@ -22,10 +21,6 @@ func _ready():
 		get_tree().change_scene_to_file("res://levels/home/home.tscn")
 	)
 
-func update_zurg_health(v: CharacterResource, _diff):
-	zurg_bar.min_value = v.min_value
-	zurg_bar.max_value = v.max_value
-	zurg_bar.value = v.value
 
 func game_won():
 	camera.move_speed = 0.0
