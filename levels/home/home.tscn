@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dygbjwnjsndsg"]
+[gd_scene load_steps=21 format=3 uid="uid://dygbjwnjsndsg"]
 
 [ext_resource type="Script" uid="uid://b35qnfpxgfwu1" path="res://levels/home/home.gd" id="1_tno0q"]
 [ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://multi_views/SharedCamera.gd" id="3_ho2oo"]
@@ -42,6 +42,9 @@ albedo_color = Color(1.44392e-07, 0.585166, 0.258229, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eneiq"]
 albedo_color = Color(0.791564, 0, 0.11551, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pljee"]
+size = Vector3(7.76102, 5.37189, 0.159424)
+
 [sub_resource type="Gradient" id="Gradient_pljee"]
 offsets = PackedFloat32Array(0, 0.785235)
 colors = PackedColorArray(2.11775e-06, 0.605216, 0.324913, 1, 0.911119, 0.0939803, 0.751844, 1)
@@ -58,40 +61,51 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2mbeu")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="WorldEnvironment"]
+[node name="World Bounds" type="StaticBody3D" parent="WorldEnvironment"]
 
-[node name="Floor" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+[node name="Floor" type="CollisionShape3D" parent="WorldEnvironment/World Bounds"]
 shape = SubResource("WorldBoundaryShape3D_fvbu7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+[node name="RightWall" type="CollisionShape3D" parent="WorldEnvironment/World Bounds"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8668, 0, -0.360229)
 shape = SubResource("WorldBoundaryShape3D_lnwet")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+[node name="LeftWall" type="CollisionShape3D" parent="WorldEnvironment/World Bounds"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.801, 0, 0.131104)
 shape = SubResource("WorldBoundaryShape3D_pljee")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+[node name="BackWall" type="CollisionShape3D" parent="WorldEnvironment/World Bounds"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.40833, 0, -32.8904)
 shape = SubResource("WorldBoundaryShape3D_tr1w2")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+[node name="FrontWall" type="CollisionShape3D" parent="WorldEnvironment/World Bounds"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.919312, 0, 32.6934)
 shape = SubResource("WorldBoundaryShape3D_a2e86")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment"]
+[node name="Grass" type="CSGBox3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, -0.530215, 0)
 size = Vector3(53, 1, 66)
 material = SubResource("StandardMaterial3D_qspqk")
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="WorldEnvironment"]
+[node name="Ramp" type="CSGPolygon3D" parent="WorldEnvironment"]
 transform = Transform3D(5.2233, 0, 0, 0, 5.2233, 0, 0, 0, 5.2233, -14.9313, 0, 0.391598)
 use_collision = true
 polygon = PackedVector2Array(0, 0, 0.0748806, 0.458277, 0.74582, 0.434315, 1.62643, -0.00898419)
 material = SubResource("StandardMaterial3D_eneiq")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2, -2.15918)
+[node name="rails" type="StaticBody3D" parent="WorldEnvironment/Ramp"]
+transform = Transform3D(0.19145, 0, 0, 0, 0.19145, 0, 0, 0, 0.19145, 0.50115, -0.0779876, -0.0749714)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/Ramp/rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2668, 2.18594, 0.420288)
+shape = SubResource("BoxShape3D_pljee")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WorldEnvironment/Ramp/rails"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2668, 2.18594, -4.79025)
+shape = SubResource("BoxShape3D_pljee")
+
+[node name="ZurgPlatform" type="CSGBox3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.91672, -2.15918)
 use_collision = true
 size = Vector3(9, 1, 5.31836)
 
