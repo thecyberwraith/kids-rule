@@ -108,6 +108,7 @@ script = ExtResource("3_o827l")
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_pljee")]
 visible = false
 include_home = false
+additional_tabs = Array[String](["res://ui/pause/settings_panel.tscn"])
 
 [node name="Ralph" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.11486)
