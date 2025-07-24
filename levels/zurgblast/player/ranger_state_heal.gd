@@ -2,11 +2,16 @@ extends AnimatedState
 
 @export var idle: CharacterState
 @onready var timer: Timer = $Timer
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
 
 var next_state = null
+
+
 func on_enter_state(data: StateMachine.Dependencies):
 	super.on_enter_state(data)
 	print("Healing allies!")
+	
+	audio.play()
 	
 	var ranger := data.character as RangerPlayer
 	ranger.healing_burst_level.value = 0.0
