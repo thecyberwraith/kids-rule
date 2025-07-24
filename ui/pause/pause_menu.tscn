@@ -60,15 +60,10 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Continue Playing"
 
-[node name="Players" parent="PanelContainer/MarginContainer/HBoxContainer/TabContainer" instance=ExtResource("2_w42b2")]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
 [node name="Home" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 2
+metadata/_tab_index = 1
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/HBoxContainer/TabContainer/Home"]
 layout_mode = 1
@@ -84,6 +79,11 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Go to the Home Level"
+
+[node name="Players" parent="PanelContainer/MarginContainer/HBoxContainer/TabContainer" instance=ExtResource("2_w42b2")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Quit" type="Control" parent="PanelContainer/MarginContainer/HBoxContainer/TabContainer"]
 visible = false

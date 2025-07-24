@@ -1,7 +1,10 @@
-class_name PauseMenu
-extends Control
 ## Orchestrates transfer of focus between tab selection and tabs, and gives
 ## access to parent menu to tabs.
+## The order of the tabs is typically Resume, Home, Players, Quit. Additional
+## tabs are inserted between the Players and Quit tabs.
+class_name PauseMenu
+extends Control
+
 
 @onready var tabs: TabContainer = $PanelContainer/MarginContainer/HBoxContainer/TabContainer
 @onready var buttons: VBoxContainer = $PanelContainer/MarginContainer/HBoxContainer/VBoxContainer
@@ -25,11 +28,12 @@ var pausing_input: PlayerInput = null:
 		else:
 			input_label.text = ""
 
-var tabs_insertion_index = 1
-var before_quit_index = -2
 var players_idx = -1
 
 func _ready():
+	var tabs_insertion_index := tabs.find_child("Quit").get_index()
+
+	
 	if not include_resume:
 		var resume: Control = tabs.find_child("Resume")
 		tabs.remove_child(resume)
@@ -40,16 +44,17 @@ func _ready():
 		var home: Control = tabs.find_child("Home")
 		tabs.remove_child(home)
 		home.queue_free()
-		before_quit_index += 1
+		tabs_insertion_index -= 1
 	
 	if not player_selection_scene == null:
 		tabs.find_child("Players").queue_free()
 		additional_tabs.insert(0, player_selection_scene.instantiate())
+		tabs_insertion_index -= 1
 
 	for tab in additional_tabs:
 		var a_tab: PauseMenuPanel = load(tab).instantiate()
 		tabs.add_child(a_tab)
-		tabs.move_child(a_tab, before_quit_index)
+		tabs.move_child(a_tab, tabs_insertion_index)
 
 	players_idx = tabs.get_children().find_custom(func(x): return x.name == "Players")
 	
