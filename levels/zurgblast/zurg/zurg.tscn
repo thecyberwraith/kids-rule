@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://wit0fthjhfxp"]
+[gd_scene load_steps=72 format=3 uid="uid://wit0fthjhfxp"]
 
 [ext_resource type="Texture2D" uid="uid://dr38tiv3rk4li" path="res://levels/zurgblast/zurg/zurg.png" id="1_a8pmx"]
 [ext_resource type="Script" uid="uid://cokay3qud7gn1" path="res://levels/zurgblast/zurg/zurg.gd" id="1_dgcbe"]
@@ -16,11 +16,12 @@
 [ext_resource type="Script" uid="uid://cq376p7fk3hvr" path="res://levels/zurgblast/zurg/states/zurg_state_volley.gd" id="11_v0u3p"]
 [ext_resource type="AudioStream" uid="uid://bqkjutt5g7h47" path="res://levels/zurgblast/zurg/sounds/sfx_sound_shutdown1.wav" id="12_kn7a5"]
 [ext_resource type="AudioStream" uid="uid://bf2x4q182s4eg" path="res://levels/zurgblast/zurg/sounds/sfx_sound_shutdown2.wav" id="13_u8p8w"]
-[ext_resource type="Script" uid="uid://cf7hkigyfqad2" path="res://levels/zurgblast/zurg/mines.gd" id="14_h1o1f"]
+[ext_resource type="Script" uid="uid://cf7hkigyfqad2" path="res://levels/zurgblast/zurg/states/mines.gd" id="14_h1o1f"]
 [ext_resource type="AudioStream" uid="uid://dutuj5xddbrgi" path="res://levels/zurgblast/zurg/sounds/sfx_weapon_singleshot1.wav" id="14_hloqa"]
 [ext_resource type="PackedScene" uid="uid://dlbyjymwfj72j" path="res://levels/zurgblast/mine/ZurgMine.tscn" id="15_eeqs6"]
 [ext_resource type="AudioStream" uid="uid://b50sngy40h2wb" path="res://levels/zurgblast/zurg/sounds/sfx_wpn_cannon4.wav" id="17_8t8i0"]
 [ext_resource type="PackedScene" uid="uid://djwe4fnj1x612" path="res://levels/zurgblast/zurg/platform.glb" id="19_kn7a5"]
+[ext_resource type="Script" uid="uid://dvtyxyc4jntlj" path="res://utility/values/difficulty_based_int.gd" id="20_bsruj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_all2i"]
 
@@ -135,10 +136,6 @@ region = Rect2(156, 48, 52, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1hb48"]
 atlas = ExtResource("1_a8pmx")
 region = Rect2(208, 48, 52, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bpq8m"]
-atlas = ExtResource("1_a8pmx")
-region = Rect2(260, 48, 52, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oca5f"]
 atlas = ExtResource("1_a8pmx")
@@ -262,9 +259,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1hb48")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bpq8m")
 }],
 "loop": false,
 "name": &"hand2",
@@ -347,6 +341,33 @@ stream_1/stream = ExtResource("13_u8p8w")
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8t8i0"]
 streams_count = 1
 stream_0/stream = ExtResource("14_hloqa")
+
+[sub_resource type="Resource" id="Resource_c3o6b"]
+script = ExtResource("5_qnj6g")
+default = 2.0
+difficulty_map = Dictionary[int, float]({
+0: 1.0,
+2: 3.5
+})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
+[sub_resource type="Resource" id="Resource_yefdy"]
+script = ExtResource("20_bsruj")
+default = 4
+difficulty_map = Dictionary[int, int]({
+0: 3,
+2: 5
+})
+metadata/_custom_type_script = "uid://dvtyxyc4jntlj"
+
+[sub_resource type="Resource" id="Resource_wk5cm"]
+script = ExtResource("20_bsruj")
+default = 6
+difficulty_map = Dictionary[int, int]({
+0: 5,
+2: 9
+})
+metadata/_custom_type_script = "uid://dvtyxyc4jntlj"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sgejs"]
 streams_count = 1
@@ -489,6 +510,9 @@ bus = &"Effects"
 script = ExtResource("14_h1o1f")
 wander = NodePath("../../wander")
 mines_template = ExtResource("15_eeqs6")
+damage_speed_factor = SubResource("Resource_c3o6b")
+minimum_mines = SubResource("Resource_yefdy")
+maximum_mines = SubResource("Resource_wk5cm")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GenericStateMachine/attack/mines"]
 stream = SubResource("AudioStreamRandomizer_sgejs")

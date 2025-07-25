@@ -2,6 +2,12 @@ extends CharacterState
 
 @export var wander: CharacterState
 @export var mines_template: PackedScene
+## How much quicker he drops mines (animations-wise) when damaged.
+@export var damage_speed_factor := DifficultyBasedFloat.new(2)
+## Low end of how many mines he drops.
+@export var minimum_mines := DifficultyBasedInt.new(4)
+## High end of how many mines he drops.
+@export var maximum_mines := DifficultyBasedInt.new(6)
 
 @onready var sound: AudioStreamPlayer = $AudioStreamPlayer
 
@@ -12,15 +18,18 @@ var mines_left: int = 0
 var move_direction = 1
 
 func on_enter_state(zurg: Zurg):
-	if zurg.damage.health.percentage < 0.4:
-		mines_left = 5
-	else:
-		mines_left = 3
+	mines_left = lerp(maximum_mines.value, minimum_mines.value, zurg.damage.health.percentage)
 
 	prep_drop(zurg)
 
+
+func on_exit_state(zurg: Zurg):
+	zurg.sprite.speed_scale = 1
+
+
 func prep_drop(zurg: Zurg):
 	zurg.sprite.play("hand2")
+	zurg.sprite.speed_scale = lerpf(damage_speed_factor.value, 1, zurg.damage.health.percentage)
 	zurg.sprite.animation_finished.connect(func(): sub_state = SUBSTATE.DROP_NEEDED, CONNECT_ONE_SHOT)
 	sub_state = SUBSTATE.ANIMATING
 
