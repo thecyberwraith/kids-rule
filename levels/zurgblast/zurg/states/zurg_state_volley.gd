@@ -50,17 +50,17 @@ func process(_dt, zurg: Zurg):
 	
 	return null
 
+
 func fire(zurg: Zurg):
 	fired += 1
-	var direction := ZurgLauncher.FireDirection.MED
-	
-	if target != null and zurg.global_position.distance_to(target.global_position) < 4:
-		direction = ZurgLauncher.FireDirection.LOW
 
-	zurg.launcher.fire(direction, 6)
+	if target != null:
+		zurg.launcher.fire(target.global_position)
+	
 	sound.play()
 	
 	need_fired = false
+
 
 func on_exit_state(zurg: Zurg):
 	timer.timeout.disconnect(update_needs_fired)
