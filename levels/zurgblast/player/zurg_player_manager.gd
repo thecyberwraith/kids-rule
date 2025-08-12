@@ -26,7 +26,7 @@ func create_player_for_input(input: PlayerInput):
 	player.add_to_group("rangers")
 
 
-func update_player_for_template(input: PlayerInput):
+func update_player_preferences(input: PlayerInput):
 	var player := player_map[input.to_string()] as RangerPlayer
 	player.character = PlayerInputs.get_prefs_for(input).character
 	player.input = input

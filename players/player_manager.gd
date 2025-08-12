@@ -29,13 +29,14 @@ func on_player_details_updated(input: PlayerInput):
 	if not player_map.has(input.to_string()):
 		create_player_for_input(input)
 	
-	update_player_for_template(input)
+	update_player_preferences(input)
 
 
-## Called when the player's template parameters have changed. By default, this
-## instantiates the appropriate player visuals on a Player class. If the
-## PlayerTemplate is not a Player subclass, this method must be overridden.
-func update_player_for_template(input: PlayerInput):
+## Called when the player's preferences have changed. By default, this
+## instantiates the appropriate player visuals on a Player class and attached
+## the input to it. If the PlayerTemplate is not a Player subclass, this
+## method must be overridden.
+func update_player_preferences(input: PlayerInput):
 	var player := player_map[input.to_string()] as Player
 	var character := PlayerInputs.get_prefs_for(input).character
 	

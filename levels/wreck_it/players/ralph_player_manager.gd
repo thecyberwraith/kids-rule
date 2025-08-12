@@ -15,12 +15,12 @@ func create_player_for_input(input: PlayerInput):
 	).global_position
 
 
-func update_player_for_template(input: PlayerInput):
+func update_player_preferences(input: PlayerInput):
 	print("Preparing player for Wreck Level")
 	var player := player_map[input.to_string()] as Player
 	player.set_script(RalphPlayerScript)
 
-	super.update_player_for_template(input)
+	super.update_player_preferences(input)
 
 	player.collision_mask |= 4
 	player.state_machine.replace_states(RalphPlayerMachineTemplate.instantiate())
