@@ -30,7 +30,12 @@ func update_player_for_template(input: PlayerInput):
 	var player := player_map[input.to_string()] as RangerPlayer
 	player.character = PlayerInputs.get_prefs_for(input).character
 	player.input = input
-	player.body.modulate = PlayerInputs.get_prefs_for(input).extra["ZURG"].color
+	
+	var color = RangerInfo.COLORS[0]
+	if PlayerInputs.get_prefs_for(input).extra.has("ZURG"):
+		color = PlayerInputs.get_prefs_for(input).extra["ZURG"].color
+	
+	player.body.modulate = color
 
 
 var healths: Array[DamageHandler] = []
