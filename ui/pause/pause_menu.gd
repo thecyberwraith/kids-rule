@@ -12,9 +12,19 @@ extends Control
 
 @export var include_resume: bool = true
 @export var include_home: bool = true
+## The PausePanels to instantiate.
+@export var additional_tabs: Array[PackedScene] = []
+
+@export_category("Player Selection")
+## If populated, completely replaces the default player selection with this
+## scene, and ignore the player_selection_row customization.
 @export var player_selection_scene: PackedScene = null
-## The paths to PausePanels to instantiate.
-@export var additional_tabs: Array[String] = []
+
+## If populated and player_selection_scene is null, ensures the row template
+## for the player_selection_scene is this specified scene.
+@export var player_selection_row: PackedScene = null
+
+@export var player_selection_extra_info_key: String = ""
 
 signal game_resumed
 
@@ -48,11 +58,17 @@ func _ready():
 	
 	if not player_selection_scene == null:
 		tabs.find_child("Players").queue_free()
-		additional_tabs.insert(0, player_selection_scene.instantiate())
+		additional_tabs.insert(0, player_selection_scene)
 		tabs_insertion_index -= 1
+	elif not player_selection_row == null:
+		var selection: PlayerSelection = tabs.find_child("Players")
+		selection.RowTemplate = player_selection_row
+		selection.setup()
+	
+	tabs.find_child("Players").game_info_key = player_selection_extra_info_key
 
 	for tab in additional_tabs:
-		var a_tab: PauseMenuPanel = load(tab).instantiate()
+		var a_tab: PauseMenuPanel = tab.instantiate()
 		tabs.add_child(a_tab)
 		tabs.move_child(a_tab, tabs_insertion_index)
 
