@@ -5,9 +5,12 @@ class_name PlayerSelection extends PauseMenuPanel
 @onready var container = $MarginContainer/VBoxContainer/VBoxContainer
 @onready var instructions = $MarginContainer/VBoxContainer/Label
 
-var RowTemplate = preload("res://ui/player_selection/player_information_row.tscn")
+@export var RowTemplate: PackedScene = preload("res://ui/player_selection/player_information_row.tscn")
 
 func _ready():
+	PlayerInputs.input_activated.connect(_add_child_row)
+	PlayerInputs.input_deactivated.connect(_remove_child_row)
+
 	visibility_changed.connect(func():
 		if is_visible_in_tree():
 			_update_input_list()
@@ -27,13 +30,13 @@ func _ready():
 		_set_all_process(false),
 		CONNECT_DEFERRED
 	)
-	
-	PlayerInputs.input_activated.connect(_add_child_row)
-	PlayerInputs.input_deactivated.connect(_remove_child_row)
-	
+
+	setup()
+
+
+func setup():
 	print("Starting off with a disabled selection panel.")
 	_set_all_process(false)
-
 
 
 func _set_all_process(val: bool):
@@ -47,6 +50,7 @@ func _set_instructions():
 	else:
 		instructions.text = "Press your menu button when all player's are here!"
 
+
 func _update_input_list():
 	for child in container.get_children():
 		child.queue_free()
@@ -56,6 +60,7 @@ func _update_input_list():
 		_add_child_row(input)
 
 	_set_instructions()
+
 
 func _add_child_row(input: PlayerInput):
 	var info := PlayerInputs.get_prefs_for(input)
@@ -100,6 +105,7 @@ func add_new_controllers():
 	for input in PlayerInputs.inactive:
 		if input.get_accept_pressed():
 			PlayerInputs.activate_input(input)
+
 
 func remove_cancelled_controllers():
 	if PlayerInputs.active.size() < 2:
