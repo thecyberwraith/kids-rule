@@ -30,7 +30,7 @@ func on_player_details_updated(input: PlayerInput):
 		create_player_for_input(input)
 	
 	update_player_for_template(input)
-	update_player_for_level_details(input)
+
 
 ## Called when the player's template parameters have changed. By default, this
 ## instantiates the appropriate player visuals on a Player class. If the
@@ -42,9 +42,6 @@ func update_player_for_template(input: PlayerInput):
 	player.visuals = load(character.path).instantiate()
 	player.input = input
 
-## Called after the appropriate template has been loaded.
-func update_player_for_level_details(_input: PlayerInput):
-	pass
 
 func handle_removing_old_players():
 	var keys_to_delete: Array[String] = []
