@@ -63,6 +63,8 @@ func handle_removing_old_players():
 	for key in keys_to_delete:
 		player_map.erase(key)
 
+
+## Instantiates the specified template and adds it as a child to this node.
 func create_player_for_input(input: PlayerInput):
 	if input.to_string() in player_map:
 		push_warning("Tried to create new player for input ", input)
