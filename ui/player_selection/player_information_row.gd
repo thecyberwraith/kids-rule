@@ -14,7 +14,7 @@ var player: int=1:
 var input: PlayerInput:
 	set(value):
 		input = value
-		input_ui.text = input.to_string()
+		after_input_changed()
 
 #var visuals: PlayerData.CharacterInfo
 var character_idx: int = -1:
@@ -39,12 +39,24 @@ func _process(delta):
 		input_delay -= delta
 		return
 	
+	if handle_player_input():
+		input_delay = max_delay
+
+
+## Called when the input delay has been reached. Returns true if input was
+## received and false if no input occurred.
+func handle_player_input() -> bool:
 	var horiz := input.get_horizontal()
 	
 	if abs(horiz) > 0.5:
 		character_idx = wrapi(character_idx+(horiz/abs(horiz)), 0, Characters.all.size())
-		input_delay = max_delay
+		return true
+	
+	return false
 
+
+func after_input_changed():
+	input_ui.text = input.to_string()
 
 func get_game_info() -> GameInfo:
 	return null
