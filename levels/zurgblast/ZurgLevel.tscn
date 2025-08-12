@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b1lrxtlhfo26j"]
+[gd_scene load_steps=25 format=3 uid="uid://b1lrxtlhfo26j"]
 
 [ext_resource type="PackedScene" uid="uid://wit0fthjhfxp" path="res://levels/zurgblast/zurg/zurg.tscn" id="1_0onmx"]
 [ext_resource type="Script" uid="uid://c8jne24r5n46n" path="res://levels/zurgblast/zurg_level.gd" id="1_we5ad"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cqnh3l5ys3jgh" path="res://levels/zurgblast/player/zurg_player_manager.gd" id="4_gkxna"]
 [ext_resource type="PackedScene" uid="uid://c67v3xbhi2yo5" path="res://ui/pause/pause_menu.tscn" id="4_lhjra"]
 [ext_resource type="Script" uid="uid://bk8xw6pdf4ykx" path="res://levels/zurgblast/player/player.gd" id="5_coj0v"]
+[ext_resource type="PackedScene" uid="uid://b3uyassirhwqa" path="res://levels/zurgblast/ui/ranger_information_row.tscn" id="5_jnx7f"]
 [ext_resource type="PackedScene" uid="uid://b2xtu7ba2rsl6" path="res://levels/zurgblast/player/RangerPlayer.tscn" id="7_hol4j"]
 [ext_resource type="Script" uid="uid://d0tkmyn62tdiv" path="res://levels/zurgblast/scrollables/scroller_spawner.gd" id="7_pcmxl"]
 [ext_resource type="PackedScene" uid="uid://3hm51s4mw4nl" path="res://levels/zurgblast/scrollables/Ramp.tscn" id="8_gkxna"]
@@ -75,6 +76,8 @@ visible = false
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_lhjra")]
 visible = false
+player_selection_row = ExtResource("5_jnx7f")
+player_selection_extra_info_key = "ZURG"
 
 [node name="World" type="Node3D" parent="."]
 

@@ -14,6 +14,7 @@ class_name RangerPlayer extends CharacterBody3D
 @onready var damage: DamageHandler = $DamageHandler
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var head: Sprite3D = $Visuals/head
+@onready var body: Sprite3D = $Visuals/ranger
 
 @onready var healing_area: Area3D = $HealAffectArea
 

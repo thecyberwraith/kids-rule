@@ -5,10 +5,12 @@ extends PlayerManager
 
 signal all_health_drained
 
-func update_player_for_template(input: PlayerInput):
-	var player := player_map[input.to_string()] as RangerPlayer
-	player.character = PlayerInputs.get_prefs_for(input).character
-	player.input = input
+
+func create_player_for_input(input: PlayerInput):
+	super.create_player_for_input(input)
+	
+	var player: RangerPlayer = player_map[input.to_string()]
+	
 	if spawn_ray.is_colliding():
 		player.global_position = spawn_ray.get_collision_point()
 	else:
@@ -22,6 +24,13 @@ func update_player_for_template(input: PlayerInput):
 	player.global_position.z = (-1)**(index+1)*ceili(index / 2.0)
 	
 	player.add_to_group("rangers")
+
+
+func update_player_for_template(input: PlayerInput):
+	var player := player_map[input.to_string()] as RangerPlayer
+	player.character = PlayerInputs.get_prefs_for(input).character
+	player.input = input
+	player.body.modulate = PlayerInputs.get_prefs_for(input).extra["ZURG"].color
 
 
 var healths: Array[DamageHandler] = []
