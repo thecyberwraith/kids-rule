@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://dygbjwnjsndsg"]
+[gd_scene load_steps=22 format=3 uid="uid://dygbjwnjsndsg"]
 
 [ext_resource type="Script" uid="uid://b35qnfpxgfwu1" path="res://levels/home/home.gd" id="1_tno0q"]
 [ext_resource type="Script" uid="uid://brpl82g71xk8b" path="res://multi_views/SharedCamera.gd" id="3_ho2oo"]
 [ext_resource type="Script" uid="uid://d2ddivf1l267l" path="res://levels/home/home_player_manager.gd" id="3_o827l"]
 [ext_resource type="PackedScene" uid="uid://c67v3xbhi2yo5" path="res://ui/pause/pause_menu.tscn" id="4_pljee"]
 [ext_resource type="Texture2D" uid="uid://cw6ot2fiv1rh6" path="res://levels/wreck_it/ralph/ralph.png" id="5_e5gns"]
+[ext_resource type="PackedScene" uid="uid://qv6iil66kp0a" path="res://ui/pause/settings_panel.tscn" id="5_tr1w2"]
 [ext_resource type="PackedScene" uid="uid://c2knxvd5re80w" path="res://levels/home/load_game_area.tscn" id="6_hb728"]
 [ext_resource type="AudioStream" uid="uid://6mlpke8crd16" path="res://levels/home/audio/The-Life-and-Times-of-Inky-Blinky-Pinky-and-Clyde_Looping.mp3" id="8_pljee"]
 [ext_resource type="Texture2D" uid="uid://bnwfbag8ounsm" path="res://levels/zurgblast/player/player_sprites.png" id="9_tr1w2"]
@@ -122,7 +123,7 @@ script = ExtResource("3_o827l")
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_pljee")]
 visible = false
 include_home = false
-additional_tabs = Array[String](["res://ui/pause/settings_panel.tscn"])
+additional_tabs = Array[PackedScene]([ExtResource("5_tr1w2")])
 
 [node name="Ralph" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.11486)
