@@ -1,6 +1,7 @@
 extends AnimatedState
 
 @export var idle: CharacterState
+@export var heal_amount: DifficultyBasedFloat
 @onready var timer: Timer = $Timer
 @onready var audio: AudioStreamPlayer = $AudioStreamPlayer
 
@@ -26,7 +27,7 @@ func on_enter_state(data: StateMachine.Dependencies):
 	
 	for area in ranger.healing_area.get_overlapping_areas():
 		var other_ranger := area.get_parent() as RangerPlayer
-		other_ranger.damage.heal(1)
+		other_ranger.damage.heal(heal_amount.value)
 
 
 func transition():

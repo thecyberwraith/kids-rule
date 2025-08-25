@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://b2xtu7ba2rsl6"]
+[gd_scene load_steps=76 format=3 uid="uid://b2xtu7ba2rsl6"]
 
 [ext_resource type="Script" uid="uid://wgujldfv764m" path="res://levels/zurgblast/player/ranger_player.gd" id="1_t5s3s"]
 [ext_resource type="PackedScene" uid="uid://ddtsjuq1v7xhd" path="res://levels/zurgblast/player/laser/laser_beam.tscn" id="2_6tx33"]
@@ -549,6 +549,15 @@ stream_0/stream = ExtResource("19_jf7c3")
 stream_1/stream = ExtResource("20_t366r")
 stream_2/stream = ExtResource("21_kwu3j")
 
+[sub_resource type="Resource" id="Resource_qwxp5"]
+script = ExtResource("2_x0x0r")
+default = 3.0
+difficulty_map = Dictionary[int, float]({
+0: 5.0,
+2: 1.0
+})
+metadata/_custom_type_script = "uid://dg3sohddc7wys"
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8ky2n"]
 random_pitch = 1.29
 streams_count = 1
@@ -849,6 +858,7 @@ metadata/_custom_type_script = "uid://bfp5l4bk0qjv4"
 [node name="HealState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle")]
 script = ExtResource("23_kwu3j")
 idle = NodePath("../IdleState")
+heal_amount = SubResource("Resource_qwxp5")
 animation = "burst"
 animation_property = &"animations"
 metadata/_custom_type_script = "uid://b1pgvr5ccdpm0"
